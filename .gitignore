@@ -1,0 +1,16 @@
+# Ignore everything by default
+*
+
+# Un-ignore tracked files and directories
+!.gitignore
+!CLAUDE.md
+!settings.json
+!settings.local.json
+
+# Un-ignore agents/ and all its contents
+!agents/
+!agents/**
+
+# Un-ignore dreamers/ and all its contents
+!dreamers/
+!dreamers/**

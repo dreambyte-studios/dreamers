@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd * && git show *)",
+      "Skill(update-config)",
+      "Read",
+      "Glob",
+      "Grep",
+      "Agent",
+      "Edit(c:/Coding)",
+      "Edit(c:/Coding/buddy-system/gradle/libs.versions.toml)",
+      "Write(c:/Coding)",
+      "Bash(find *)",
+      "Bash(jar *)",
+      "Bash(java *)",
+      "Bash(cat:*)",
+      "Bash(tail:*)",
+      "Bash(head:*)",
+      "Bash(grep:*)"
+      ]
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    }
+  },
+  "autoUpdatesChannel": "latest",
+  "model": "sonnet"
+}
