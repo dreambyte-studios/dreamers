@@ -2,6 +2,7 @@
 *
 
 # Un-ignore tracked files and directories
+!.gitattributes
 !.gitignore
 !CLAUDE.md
 !settings.json

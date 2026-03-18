@@ -1,0 +1,2 @@
+# Normalize line endings: store LF in repo, auto-convert on Windows checkout
+* text=auto eol=lf
