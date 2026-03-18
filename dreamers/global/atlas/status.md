@@ -1,7 +1,7 @@
 # Atlas Status
 
 ## Current Goal
-Idle — plan-2 cycle complete.
+Idle — meta edit complete (routing shortcuts updated in atlas.md).
 
 ## Last Completed Cycle
 **Plan 2 — Enforce Sentinel Outputs and Inbox Archiving**
@@ -14,16 +14,17 @@ Idle — plan-2 cycle complete.
 - Git commit pending (Bash unavailable in Atlas context): run the following manually:
   ```
   cd /c/Users/cjsto/.claude
-  git add agents/sentinel.md agents/atlas.md dreamers/
-  git commit -m "chore(agents): enforce sentinel output files and add inbox archiving guidance
+  git add agents/atlas.md
+  git commit -m "chore(agents): simplify meta-work routing — Atlas edits directly
 
-  - sentinel.md: add Output file creation (mandatory) subsection requiring
-    findings.md, review.md, outbox.md to exist before writing review output
-  - atlas.md: add Inbox archiving subsection to prune [ROUTED]/[COMPLETE]
-    inbox items to archive when count exceeds ~10 at routing time
+  Replace Atlas → Sentinel → Forge → Atlas shortcut with Atlas edits directly.
+  Atlas has the full tool set for text file edits; Forge and Sentinel add no
+  value for straightforward agent/config updates. User diff review before commit
+  is the review gate. Nova carve-out preserved for non-obvious cross-agent changes.
 
-  Plan: plan-2-enforce-sentinel-outputs-and-inbox-archiving"
+  Decision: decisions.md 2026-03-18 (Atlas makes meta edits directly)"
   ```
+- Prior pending commit: sentinel.md + atlas.md inbox archiving (plan-2) — consolidate into one push if not yet committed
 - Prior open item: `git push -u origin master` (GitHub credentials — `gh auth login` or PAT in Windows Credential Manager)
 - Improvement 2 (plan-1 retro): CJ decision protocol for atlas.md — still open
 

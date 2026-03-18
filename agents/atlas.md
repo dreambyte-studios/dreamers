@@ -94,10 +94,11 @@ Atlas routes autonomously — invoke the next agent directly without pausing to 
 - Plan only, no implementation yet: Atlas → Nova → Atlas
 - Docs update only: Atlas → Echo → Atlas
 - Fix a review finding: Atlas → Forge → Atlas → Sentinel → Atlas → Echo → Atlas (skip Nova, Probe)
-- Meta work (agent/config updates): Atlas → Sentinel → Forge → Atlas (skip Nova, Probe, Echo)
-  - Applies when: updating agent definitions (agents/), dreamers workspace files (~/.claude/dreamers/ or ./.dreamers/), or config files (CLAUDE.md, settings.json, settings.local.json)
-  - Skip rationale: Nova — scope is clear from the proposed change; Probe — nothing to test; Echo — no external docs affected
-  - Exception: if the change affects more than one agent's behavior or alters a cross-agent protocol (routing model, delegation protocol, retro process), add Nova before Sentinel
+- Meta work (agent/config updates): Atlas edits directly, no Forge or Sentinel needed
+  - When to use: any update to agent definitions (agents/), dreamers knowledge base (dreamers/), or config files (CLAUDE.md, settings.json, settings.local.json)
+  - Atlas has Read, Write, Edit, Glob, Grep — sufficient for all text file edits; no capability gap that Forge fills
+  - User reviews the diff before committing; that is the review gate for meta work
+  - Carve-out: if the change has non-obvious cross-agent effects, run Nova first before Atlas edits
 
 Atlas decides which shortcut applies. When in doubt, run the full pipeline.
 

@@ -37,3 +37,61 @@ Meta change: Atlas → Sentinel → Forge → Atlas
 
 ## 2026-03-18 — Git root is C:\Users\cjsto\.claude
 The user said "initialize in the current working directory (C:\Users\cjsto\.claude\dreamers)" but the files to track (agents/, CLAUDE.md, settings.json, settings.local.json) are siblings of dreamers/, not inside it. Therefore the git root must be `C:\Users\cjsto\.claude`, not the dreamers subdirectory.
+
+---
+
+## 2026-03-18 — Atlas makes meta edits directly (skip Forge and Sentinel)
+
+**Question:** For meta work (agent definitions, Kernel, config), can Atlas skip Forge and Sentinel entirely and make edits directly?
+
+**Decision: Yes. Atlas edits meta files directly.**
+
+**Reasoning:**
+
+The prior decision (2026-03-18, "Meta-work routing shortcut") routed meta work as Atlas → Sentinel → Forge → Atlas. That was better than the full pipeline but still wrong. Here is why:
+
+1. **Forge adds no value for meta work.** Forge's purpose is implementing non-trivial code where a dedicated implementation pass catches structural mistakes. Editing a markdown agent definition is not that. Routing through Forge just introduces a handoff with no upside.
+
+2. **Sentinel pre-flight is not worthless but is disproportionate.** For straightforward prompt edits where the user has stated exactly what they want, a dedicated Sentinel pass is process theater. The real review mechanism for meta work is: CJ reads the diff before approving the commit. That is sufficient.
+
+3. **Atlas already has the tools.** Atlas has Read, Write, Edit, Glob, Grep — the full toolkit needed for text file edits. There is no capability gap that Forge fills.
+
+4. **The risk of Atlas making a bad edit is low and recoverable.** Agent definitions are version-controlled. A bad edit is a `git revert` away. The cost of a mistake is low; the cost of a multi-agent pipeline for every minor prompt tweak is high.
+
+**Updated meta-work routing shortcut:**
+```
+Meta change: Atlas edits directly → user reviews diff → commit
+```
+
+**When this does NOT apply:**
+- Redesigning the routing model or agent role boundaries (use Nova first)
+- Any change with cross-agent downstream effects that are non-obvious (use Nova first)
+- Changes where Atlas is uncertain what the correct edit is (ask CJ, not Sentinel)
+
+**Supersedes:** The "Meta change: Atlas → Sentinel → Forge → Atlas" shortcut from the 2026-03-18 meta-work decision.
+
+---
+
+## 2026-03-18 — Atlas should NOT get the Agent tool for autonomous routing
+
+**Question:** Should Atlas be given the Agent tool so it can invoke other agents autonomously without the user needing to invoke each one?
+
+**Decision: No. Do not give Atlas the Agent tool.**
+
+**Reasoning:**
+
+1. **Loss of user visibility is the core problem.** The current model requires CJ to invoke each agent. That is not inefficiency — it is a checkpoint. CJ sees what each agent produces before the next one runs. Autonomous chaining removes those checkpoints. If Forge produces a bad implementation, Atlas-with-Agent-tool would hand it to Sentinel and Probe before CJ ever sees it.
+
+2. **Failure propagation.** In a multi-agent chain, a bad output in step 2 corrupts every downstream step. With manual invocation, the blast radius is one agent. With autonomous routing, it is the whole pipeline.
+
+3. **The Agent tool creates a different execution model.** Subagents spawned via the Agent tool run in isolated contexts. They do not share the parent's conversation history the same way. This changes how agents read their inbox, how they access plan files, and how handoff content works. It is a significant architectural change, not a convenience tweak.
+
+4. **The current friction is acceptable and intentional.** Requiring CJ to invoke each agent keeps CJ in the loop on non-trivial work. The prior decision (2026-03-18, "Atlas autonomous routing") already removed unnecessary pausing for trivial routing decisions. What remains is deliberate human checkpointing.
+
+5. **The right place to reduce friction is shortcut routing, not autonomous chaining.** If a task only needs Forge + Echo, Atlas should say that clearly and CJ invokes two agents instead of five. That preserves visibility without the risks of autonomous execution.
+
+**What to do instead of the Agent tool:**
+- Keep routing shortcuts tight and accurate so CJ invokes only the agents actually needed.
+- Atlas states clearly in chat which agent is next and why, so each invocation is a low-friction decision for CJ.
+
+**Applies to:** Any future proposal to add Agent tool to Atlas's tool list or to enable autonomous pipeline execution.
