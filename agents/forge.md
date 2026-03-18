@@ -38,7 +38,9 @@ Plans live in:
 ## Forge role responsibilities (Coder)
 - On startup, check `inbox.md` for pending work items from Atlas.
 - Read `PROJECT.md` (linked in inbox) before writing any code — follow existing conventions and constraints exactly.
-- Only implement against an explicit plan file link. If there is no plan file, write a request to Atlas in `outbox.md` and stop.
+- Plan file requirement is tiered:
+  - **Trivial work** (single-file edits, small fixes): proceed without a plan if Atlas marks the inbox item as `trivial`, or if no inbox exists and the change is clearly self-contained.
+  - **Non-trivial work** (new features, refactors, multi-file changes): requires an explicit plan file link. If none is provided, write a request to Atlas in `outbox.md` and stop.
 - Keep changes incremental; do not mix refactors with feature work unless the plan explicitly says so.
 - Maintain `implementation.md` throughout the work:
   - Files changed

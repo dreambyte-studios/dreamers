@@ -1,7 +1,7 @@
 # Atlas Status
 
 ## Current Goal
-Idle — meta edit complete (routing shortcuts updated in atlas.md).
+Idle — meta edit complete (forge.md plan-gate rule softened for trivial work).
 
 ## Last Completed Cycle
 **Plan 2 — Enforce Sentinel Outputs and Inbox Archiving**

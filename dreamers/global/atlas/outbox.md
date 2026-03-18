@@ -26,3 +26,23 @@ git add agents/sentinel.md agents/atlas.md dreamers/
 ```
 
 Then push: `git push -u origin master`
+
+---
+
+## 2026-03-18 — Git commit pending: forge.md trivial-work plan-gate softened
+
+**For:** CJ (manual) or main Claude instance (if Bash available)
+
+**What changed:** `agents/forge.md` role responsibilities — replaced hard "no plan = stop" rule with a tiered requirement: trivial work (single-file edits, small fixes) proceeds without a plan when Atlas marks the item `trivial` or when the change is clearly self-contained; non-trivial work still requires a plan file.
+
+**Commit command:**
+```
+cd /c/Users/cjsto/.claude
+git add agents/forge.md
+git commit -m "chore(agents): soften forge plan-gate — trivial work proceeds without plan
+
+Trivial work (single-file edits, small fixes) no longer hard-stops if no
+plan file is present, provided Atlas marked the inbox item as trivial or
+the change is clearly self-contained. Non-trivial work (new features,
+refactors, multi-file changes) still requires an explicit plan file link."
+```

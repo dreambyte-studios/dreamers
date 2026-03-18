@@ -1,5 +1,33 @@
 # Atlas Decisions
 
+## 2026-03-18 — Bypassing Atlas for trivial changes: do not make agents self-sufficient
+
+**Question:** Should CJ be able to invoke Forge (or other agents) directly, bypassing Atlas, for trivial code changes?
+
+**Decision: No. Atlas remains the mandatory entry point. Fix friction through tighter routing shortcuts, not agent self-sufficiency.**
+
+**Reasoning:**
+
+1. **Forge's current blockers would halt direct invocation.** Forge reads `inbox.md` on startup and requires a plan file link. Without Atlas prep, both are missing and Forge stops. Bypassing Atlas does not save time — it causes Forge to write back to Atlas and wait anyway.
+
+2. **Making agents self-sufficient creates two-mode agents.** An inbox-driven mode and a direct-invocation mode diverge in behavior. Safeguards (plan file check, PROJECT.md read, structured handoffs) erode in the direct mode. Over time the inconsistency causes mistakes.
+
+3. **The friction is not "Atlas must run first" — it is in what Atlas does.** For a trivial fix, Atlas writes two sentences into Forge's inbox and names the shortcut route. That is the correct cost: low, consistent, and preserves the safeguard chain.
+
+4. **The right fix is making the trivial shortcut explicit.** The existing routing shortcuts already cover this: `Atlas → Forge → Atlas → Echo → Atlas`. Atlas should invoke this immediately without ceremony for genuinely trivial changes.
+
+**One genuine gap fixed:** Forge's rule "no plan file = stop" is too rigid. A one-line fix does not need a plan file. The rule should be "no plan file for non-trivial work = stop." Forge judges triviality by: single file, well-understood change, no cross-agent effects, and Atlas's inbox explicitly marks it trivial.
+
+**What Atlas must do for trivial direct-to-Forge routing:**
+- Confirm in chat the change qualifies as trivial
+- Write a minimal inbox entry to Forge: context, what to change, done criteria
+- State "no plan file needed — trivial change" explicitly in the inbox
+- Invoke Forge immediately
+
+**Applies to:** All agent invocation patterns. Atlas is always the entry point.
+
+---
+
 ## 2026-03-18 — Atlas autonomous routing (no user approval needed)
 
 **Context:** CJ gave explicit feedback that Atlas should handle agent routing autonomously. The original Kernel required Atlas to tell the user which agent to invoke next and wait.
