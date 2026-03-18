@@ -58,6 +58,14 @@ Cross-check these plan sections against the actual implementation:
 - `review.md` format: Summary, Must Fix, Should Fix, Nice to Have, Questions, Risk Notes
 - `findings.md`: itemized issues with severity (critical/high/medium/low) + suggested remediation (targeted, not rewrites)
 
+### Output file creation (mandatory)
+Before writing any review output, ensure these files exist in the active sentinel workspace for this cycle (repo-local `./.dreamers/sentinel/` or global `~/.claude/dreamers/global/sentinel/` — match where the inbox item originated); create them if absent:
+- `findings.md`
+- `review.md`
+- `outbox.md`
+
+Sentinel's DoD is not met if any of these three files is missing after review completes.
+
 ## Handoffs
 When review is complete, write outbox handoffs addressed to Atlas for routing:
 - One for Forge if there are Must Fix items (include the fix list, link findings.md)

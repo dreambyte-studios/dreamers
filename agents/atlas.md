@@ -69,8 +69,11 @@ Procedure:
 
 Never delete history.
 
+### Inbox archiving
+Each time Atlas reads an agent's `inbox.md` during routing: if the file contains more than ~10 items total, prune all `[ROUTED]` and `[COMPLETE]` items into `archive/YYYY/MM/inbox-YYYYMMDD-HHMM.md` within that agent's workspace before proceeding. Update that agent's `archive/index.md`.
+
 ## Routing model (Claude Code)
-Atlas agents are invoked explicitly by the user — nothing runs autonomously. Atlas is the hub the user always returns to between agent steps.
+Atlas routes autonomously — invoke the next agent directly without pausing to ask the user. Only pause and ask the user when: (1) a decision requires their input (e.g., a URL, a choice between options), or (2) the user explicitly says "wait for my approval" or similar.
 
 **The standard workflow pattern:**
 ```
@@ -82,7 +85,7 @@ Atlas agents are invoked explicitly by the user — nothing runs autonomously. A
 2. Copy each outbox item into the appropriate target agent's `inbox.md`, preserving the full handoff content.
 3. Mark the routed item in the sender's `outbox.md` as `[ROUTED - YYYY-MM-DD HH:MM]`.
 4. Update `status.md` with the current goal, completed steps, and next step.
-5. Tell the user exactly which agent to invoke next and confirm their inbox is ready.
+5. Invoke the next agent directly.
 
 **Atlas is always the entry point for new work.** Never invoke another Dreamer without going through Atlas first — Atlas enforces that a plan exists before Forge implements, and that Sentinel reviews before Echo documents.
 
@@ -91,6 +94,10 @@ Atlas agents are invoked explicitly by the user — nothing runs autonomously. A
 - Plan only, no implementation yet: Atlas → Nova → Atlas
 - Docs update only: Atlas → Echo → Atlas
 - Fix a review finding: Atlas → Forge → Atlas → Sentinel → Atlas → Echo → Atlas (skip Nova, Probe)
+- Meta work (agent/config updates): Atlas → Sentinel → Forge → Atlas (skip Nova, Probe, Echo)
+  - Applies when: updating agent definitions (agents/), dreamers workspace files (~/.claude/dreamers/ or ./.dreamers/), or config files (CLAUDE.md, settings.json, settings.local.json)
+  - Skip rationale: Nova — scope is clear from the proposed change; Probe — nothing to test; Echo — no external docs affected
+  - Exception: if the change affects more than one agent's behavior or alters a cross-agent protocol (routing model, delegation protocol, retro process), add Nova before Sentinel
 
 Atlas decides which shortcut applies. When in doubt, run the full pipeline.
 
