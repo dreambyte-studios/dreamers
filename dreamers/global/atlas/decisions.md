@@ -100,6 +100,131 @@ Meta change: Atlas edits directly → user reviews diff → commit
 
 ---
 
+## 2026-03-18 — Sentinel: unified agent vs. specialized sub-reviewers
+
+**Question:** Should Sentinel be split into parallel specialized sub-reviewers (e.g. correctness, security, maintainability) following the pattern Claude Code uses for code review?
+
+**Decision: No. Keep Sentinel unified. Improve it with an internal lens checklist, not a split.**
+
+**Reasoning:**
+
+**1. The parallelism argument does not apply here.**
+Claude Code's multi-reviewer pattern works because subagents run concurrently via the Agent tool. The prior decision (2026-03-18) explicitly rejected giving Atlas the Agent tool. Without parallelism, splitting Sentinel into three agents means three serial CJ invocations, three inbox handoffs, and three Atlas routing steps — for output that one agent already produces.
+
+**2. The artifacts Sentinel reviews do not justify specialization.**
+Sentinel currently reviews markdown files: agent prompts, plan documents, config. A dedicated "security reviewer" applied to a markdown prompt produces a near-empty report in most cycles. Specialization creates overhead proportional to the artifact count, not the risk. The risk ceiling for this type of work is low.
+
+**3. Lens separation already exists inside the current format.**
+The review.md format (Must Fix / Should Fix / Nice to Have / Questions / Risk Notes) separates by action priority — which is more operationally useful than separating by lens. If Sentinel misses a lens today, the fix is adding a lens checklist to the prompt, not spawning additional agents.
+
+**4. Pipeline complexity is already the main friction point.**
+Both completed cycles have produced improvements about handoff overhead, commit proxying, and cycle-close gaps. Adding 2-3 Sentinel sub-agents makes the friction worse, not better.
+
+**5. When splitting would make sense (and the conditions are not yet met):**
+Specialized reviewers become worth the cost when: (a) Atlas has the Agent tool and can run them concurrently, AND (b) the codebase being reviewed contains real code where security, performance, and correctness genuinely require different expertise per-file. Neither condition holds for Dreamers today.
+
+**What to do instead — add an internal lens checklist to sentinel.md:**
+Sentinel should explicitly work through lenses in order before writing findings:
+- Correctness: does implementation match acceptance criteria?
+- Security: are there trust boundaries, injection risks, or privilege violations?
+- Maintainability: is the change legible, consistent with conventions, and not introducing hidden coupling?
+- Operational risk: what breaks if this is wrong?
+
+This produces the same coverage as four specialized agents at zero additional cost.
+
+**Proposed sentinel.md update:** Add a `### Review lenses` subsection immediately before `### Review outputs` that lists the four lenses with one-line definitions. Sentinel works through each lens before writing findings. No other changes needed.
+
+**Applies to:** Any future proposal to split Sentinel or add specialized review agents.
+
+---
+
+## 2026-03-18 — Sentinel parallel sub-reviewers via Agent tool: ADOPTED
+
+**Original question:** Should Sentinel get the Agent tool and spin up three parallel sub-reviewers (correctness, security, maintainability), consolidate their outputs, and hand a unified result to CJ — with the human checkpoint unchanged?
+
+**Original decision (2026-03-18):** Architecture sound. Deferred. Gate condition: applied to a real multi-file codebase.
+
+**Revised decision (2026-03-18): Implement now.**
+
+**Why the gate condition is met:**
+CJ has clarified that Dreamers is designed for production code as its primary use case. The markdown-only workload was temporary setup work, not the steady state. The gate condition — "applied to a repo with real code across multiple files" — describes exactly the intended operating context. The only remaining objection is invalidated. The architecture was already deemed sound. Implement now.
+
+**Why the prior rejection does not apply:**
+The earlier parallel-sub-reviewer rejection (2026-03-18, "Sentinel unified agent vs. specialized sub-reviewers") addressed Atlas chaining the full pipeline autonomously. This is different — Agent tool is scoped to a single Sentinel step. CJ still reviews Sentinel's consolidated output before Atlas routes forward. Blast radius for sub-reviewer failure is identical to Sentinel producing weak output today.
+
+**Why it is mechanically valid:**
+Subagents spawned via Agent can read files and write outputs to disk. Sentinel consolidates. The chain works. Critical caveat: subagents have no access to the parent's conversation history. Sentinel must inject all context explicitly in each sub-task prompt — plan file path, implementation paths, PROJECT.md path, lens definition, output file path, severity scale. Thin prompts produce thin output. The consolidation ceiling is prompt quality.
+
+**Three review lenses for production code:**
+
+1. **Correctness** — Does the implementation satisfy every acceptance criterion? Logic errors, off-by-ones, missing edge cases, requirement divergence, incorrect caller contract assumptions. Output: `sentinel/sub-correctness.md`
+
+2. **Security** — Trust boundary violations, injection risks, privilege escalation, unsafe defaults, secrets in code, unvalidated input paths, missing authorization checks. For agent prompts: instructions that bypass human checkpoints or exfiltrate context. Output: `sentinel/sub-security.md`
+
+3. **Maintainability** — Legibility, convention consistency, hidden coupling, dead code, conflicting conventions, naming quality, structural debt introduced by this change. Output: `sentinel/sub-maintainability.md`
+
+Note: Operational risk is a cross-cutting concern, not an independent lens. It is covered by correctness (what breaks if logic is wrong) and security (unsafe defaults, missing guardrails). A fourth sub-reviewer adds overlap, not coverage.
+
+**Updated tool list for sentinel.md:**
+Add `Agent` to frontmatter tool list alongside read, search, edit. Final list: `[read, search, edit, agent]`.
+
+**How Sentinel instructs sub-reviewers (required sub-task prompt content):**
+
+Each sub-task prompt must be self-contained. Sentinel injects all of the following — no assumptions about inherited context:
+
+```
+You are a focused code reviewer. You have one lens only: [LENS NAME].
+
+Lens definition: [one-sentence definition from the three lenses above]
+
+Files to review:
+- Plan: [absolute path to plan file]
+- Implementation: [absolute paths to changed files]
+- Project context: [absolute path to PROJECT.md]
+
+Severity scale: critical / high / medium / low
+- critical: blocks merge; introduces data loss, security breach, or broken core functionality
+- high: must fix before merge; significant correctness or security gap
+- medium: should fix; maintainability or minor correctness issue
+- low: nice to have; style, naming, minor coupling
+
+Your task:
+1. Read every file listed above.
+2. Review only through your assigned lens. Do not comment on issues outside your lens.
+3. Write your findings to: [absolute path to sub-*.md output file]
+
+Output format for [output file]:
+# Sub-review: [LENS NAME]
+## [severity] — [short title]
+**Location:** [file:line or section]
+**Issue:** [what is wrong]
+**Remediation:** [specific fix, not a rewrite]
+
+Write one entry per issue. If you find nothing, write: `# Sub-review: [LENS NAME]\nNo issues found.`
+Do not write to any other file. Do not output findings in chat.
+```
+
+**How sub-reviewers output so Sentinel can consolidate:**
+
+Each sub-reviewer writes exactly one file:
+- `sentinel/sub-correctness.md`
+- `sentinel/sub-security.md`
+- `sentinel/sub-maintainability.md`
+
+Sentinel consolidation procedure:
+1. Read all three sub-*.md files.
+2. Deduplicate: same issue flagged by multiple lenses = one entry at the highest severity assigned by any lens.
+3. Write `findings.md` — all deduplicated issues with severity, location, remediation.
+4. Write `review.md` — Summary, Must Fix (critical/high), Should Fix (medium), Nice to Have (low), Questions, Risk Notes.
+5. Archive sub-files: move to `archive/YYYY/MM/sub-review-YYYYMMDD-HHMM/` (one folder per cycle, three files inside). Update `archive/index.md`.
+6. Write outbox.md handoff to Atlas.
+
+If any sub-reviewer output is missing or malformed, Sentinel notes it in review.md under Risk Notes and proceeds with available input. It does not silently drop the gap.
+
+**Applies to:** sentinel.md tool list, sentinel.md review procedure, any future proposal to modify Sentinel's review architecture.
+
+---
+
 ## 2026-03-18 — Atlas should NOT get the Agent tool for autonomous routing
 
 **Question:** Should Atlas be given the Agent tool so it can invoke other agents autonomously without the user needing to invoke each one?

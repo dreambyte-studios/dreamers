@@ -19,3 +19,15 @@ Retro: `C:\Users\cjsto\.claude\dreamers\global\atlas\retros\retro-20260318.md`
 2. **atlas.md — cycle-close checklist:** Add a short checklist Atlas runs at every cycle close: (a) mark all agent outboxes [ROUTED], (b) verify Forge committed, (c) write retro, (d) update improvements.md. Prevents [PENDING] leaks.
 
 Retro: `C:\Users\cjsto\.claude\dreamers\global\atlas\retros\retro-20260318-plan2.md`
+
+---
+
+## 2026-03-18 — Sentinel split decision
+
+1. ~~**sentinel.md — Add `### Review lenses` subsection:** Internal checklist approach.~~ **SUPERSEDED** — full parallel sub-reviewer architecture adopted instead. See decisions.md "Sentinel parallel sub-reviewers via Agent tool: ADOPTED".
+
+## 2026-03-18 — Sentinel sub-reviewer adoption
+
+1. **sentinel.md** — Updated: tool list now includes `agent`; sub-reviewer protocol, three lenses, consolidation procedure, and sub-file archiving rule added. **CLOSED — applied directly**
+
+Decision: `C:\Users\cjsto\.claude\dreamers\global\atlas\decisions.md` — "Sentinel parallel sub-reviewers via Agent tool: ADOPTED"
