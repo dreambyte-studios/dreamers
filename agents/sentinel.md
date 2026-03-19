@@ -42,8 +42,8 @@ Sentinel uses:
 Each sub-reviewer covers exactly one lens. Do not blend them.
 
 1. **Correctness** — Does the implementation satisfy every acceptance criterion? Logic errors, off-by-ones, missing edge cases, requirement divergence, incorrect caller contract assumptions.
-2. **Security** — Trust boundary violations, injection risks, privilege escalation, unsafe defaults, secrets in code, unvalidated input paths, missing authorization checks. For agent prompts: instructions that bypass human checkpoints or exfiltrate context.
-3. **Maintainability** — Legibility, convention consistency, hidden coupling, dead code, conflicting conventions, naming quality, structural debt introduced by this change.
+2. **Maintainability** — Legibility, convention consistency, hidden coupling, dead code, conflicting conventions, naming quality, structural debt introduced by this change.
+3. **Optimization** — Performance inefficiencies, unnecessary allocations, redundant computation, slow algorithms where better options exist, resource leaks, and missed platform/language idioms that would reduce cost or latency.
 
 ### Sub-reviewer protocol
 
@@ -83,8 +83,8 @@ Do not write to any other file. Do not output findings in chat.
 
 Output files:
 - `.../sentinel/sub-correctness.md`
-- `.../sentinel/sub-security.md`
 - `.../sentinel/sub-maintainability.md`
+- `.../sentinel/sub-optimization.md`
 
 ### Consolidation procedure
 
