@@ -190,17 +190,24 @@ After Nova completes and before routing to Forge, Atlas reads the plan file(s) a
 
 ---
 
-### Gate 3 — Post-Forge: Implementation completeness check
+### Gate 3a — Pre-Sentinel: Implementation artifact exists
 
-After Forge completes and before routing to Sentinel, Atlas reads `forge/implementation.md` and checks:
+After Forge's initial pass and before routing to Sentinel, Atlas checks one thing only:
 
-- [ ] File exists and is non-empty
+- [ ] `forge/implementation.md` exists and is non-empty
+
+If missing: send back to Forge before Sentinel runs. Sentinel cannot review without knowing which files changed.
+
+### Gate 3b — Post-Forge-fixes: Implementation completeness check
+
+After the full Sentinel → Forge-fixes cycle completes (no remaining blockers) and before routing to Probe, Atlas reads the final `forge/implementation.md` and checks:
+
 - [ ] Lists every file **changed** (with a one-line reason per file)
 - [ ] Lists every file **read for context** (enables Nova's bounded re-check)
 - [ ] `How to test` section maps explicitly to the sub-plan's Automated testability criteria
 - [ ] Known limitations / follow-ups section is present (even if empty, must be explicitly stated as "none")
 
-**Any missing field = send back to Forge** to complete `implementation.md` before Sentinel runs. Do not let Sentinel review incomplete handoff artifacts.
+**Any missing field = send back to Forge** to complete `implementation.md` before Probe runs. The gate runs on the *final* state of implementation — after all fix rounds — not the initial Forge pass.
 
 ---
 
