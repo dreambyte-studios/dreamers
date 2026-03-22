@@ -111,15 +111,27 @@ Atlas routes autonomously — invoke the next agent directly without pausing to 
 ```
 @atlas → @nova (umbrella + all sub-plans) → @atlas
   → [for each sub-plan]:
-      @forge (sub-plan N) → @atlas → @sentinel → @atlas → @probe → @atlas
-      → @nova (re-verify remaining plan against what was built) → @atlas
-      → [next sub-plan, or PR if last]
+      @forge → @atlas → @sentinel → @atlas → @probe → @atlas → Gate 3b → Gate 4
+      → if "User testing required: yes":
+            distribute build → PAUSE → notify user → wait for sign-off
+      → commit sub-plan → @nova (re-verify remaining plan) → @atlas
+      → [repeat for next sub-plan]
+  → [all sub-plans done] → PR opened → user reviews + merges
 ```
+
+**Sub-plan commit and PR rules:**
+- Each sub-plan's changes are committed to the feature branch immediately after Probe passes (and user sign-off, if required) — **no PR per sub-plan**.
+- The PR is opened **only once, after all sub-plans in the umbrella feature are complete**. The PR diff covers the entire feature.
+- This keeps the branch alive across all sub-plans and gives the user a single review at the end.
 
 **Inter-sub-plan boundary rule:** After each sub-plan's pipeline completes (Forge + Sentinel + Probe all pass), Atlas MUST invoke Nova with the prior sub-plan's artifacts before Forge starts the next sub-plan. Nova's inbox handoff for re-verification must include:
 - Absolute paths to: `forge/implementation.md`, `probe/bugs.md`, `probe/test-plan.md`, `sentinel/findings.md`
 - Which sub-plan was just completed
 - The full list of remaining sub-plan files to re-verify
+
+**User testing pause rule:** Atlas checks the completed sub-plan's `User testing required` field (set by Nova):
+- `no` — commit immediately, invoke Nova re-verify, continue to next sub-plan without pausing.
+- `yes` — distribute a build per the project's distribution method (check `PROJECT.md` for how), notify the user, and **pause the pipeline**. Do not invoke Nova re-verify or start the next sub-plan until the user explicitly gives the go-ahead.
 
 Sentinel runs as a single invocation and internally spawns three focused sub-reviewers (correctness, security, maintainability). Sentinel consolidates their output into `findings.md` and `review.md` in its workspace, then hands off to Atlas.
 

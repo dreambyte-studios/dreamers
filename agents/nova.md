@@ -101,7 +101,7 @@ Every non-trivial feature must be broken into the smallest possible independentl
 
 **Sub-plan** (`plan-{n}a`, `plan-{n}b`, …) must include:
 - `# Plan {n}{letter} — {Short Title}`
-- Metadata: Owner (Nova), Date, Scope, Parent (link to umbrella), Depends-on (prior sub-plans if any), Status, Links
+- Metadata: Owner (Nova), Date, Scope, Parent (link to umbrella), Depends-on (prior sub-plans if any), Status, User-testing-required (yes/no), Links
 - Sections:
   - Summary
   - Scope / Non-goals (specific to this chunk)
@@ -114,6 +114,7 @@ Every non-trivial feature must be broken into the smallest possible independentl
     - **Automated:** exact command or assertion Probe runs to declare pass/fail (a compile/type-check is acceptable for purely structural sub-plans with no visible output)
     - **Manual:** what a human checks to confirm correct behavior — required unless the sub-plan has genuinely no visible output or user-facing effect
   - Rollback boundary: is this sub-plan's changes independently reversible? If not, explain the coupling and flag it as a risk.
+- **User testing required:** `yes` if a human must manually verify this sub-plan on a real device or environment before the next sub-plan begins (e.g. UI flows, push notifications, payments, camera, permissions). `no` for purely backend, data-layer, or non-visible changes that Probe can fully verify automatically. When in doubt, default to `yes`.
   - Risks / Mitigations
   - Rollback / Observability
 - Status field: Draft / Active / Completed / Superseded
@@ -122,6 +123,27 @@ Every non-trivial feature must be broken into the smallest possible independentl
 - `# Plan {n} — {Short Title}`
 - All sections: Summary, Problem/Motivation, Scope/Non-goals, Requirements, Constraints, Approach options, Recommended approach, Milestones/Tasks, Acceptance criteria, Risks/Mitigations, Rollback/Observability
 - Status field: Draft / Active / Completed / Superseded
+
+## Testing coverage mandate (MANDATORY)
+
+Every plan — umbrella, sub-plan, or standalone — **must** include a complete testing strategy. "Complete" means all three layers are considered and any gaps are explicitly called out as accepted risks or deferred work:
+
+### 1. Unit / integration tests
+- Every new repository method and ViewModel action must have a corresponding unit test.
+- Tests use the project's established test stack. For Android projects this means `StandardTestDispatcher` + Turbine + MockK (relaxed) unless the project specifies otherwise.
+- Acceptance criteria must include "`./[test command]` passes" with the exact command.
+
+### 2. UI / E2E tests
+- Every new **screen** or **user-visible flow** must ship with a corresponding E2E test.
+- Use whatever E2E tool the project already uses (Maestro, Espresso, Playwright, Cypress, etc.). If no E2E tool is established, flag this as a gap and recommend one.
+- The E2E test must cover: the happy path, at least one error/empty state, and any cooldown or permission-gated variation where the UI changes.
+- If writing a full E2E flow is out of scope for the current sub-plan (e.g. the screen depends on an unshipped sub-plan), the plan must explicitly note this, name the sub-plan where the E2E will land, and add it to that sub-plan's scope.
+
+### 3. Manual verification steps
+- Every plan must include a **Manual** section in its Testability Contract describing what a human checks to confirm correct behaviour end-to-end. This is the minimum bar when automation is not yet available.
+
+### Why this matters
+Missing UI test coverage has been the primary source of regressions in this project. Unit tests catch logic errors; E2E flows catch wiring errors (missing Firestore rules, broken nav routes, missing UI elements) that unit tests cannot see.
 
 ## Sub-plan re-verification (MANDATORY)
 
