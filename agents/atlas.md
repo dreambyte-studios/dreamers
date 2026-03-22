@@ -77,7 +77,8 @@ Atlas MUST read `.dreamers/atlas/improvements.md` at two moments:
 Every milestone uses a feature branch + PR — never work directly on main.
 
 **Branch setup (Atlas does this before invoking Forge):**
-1. Cut `feat/d<N>-<name>` from main
+1. `git pull origin main` — always pull main before cutting a branch. Never build off a stale local main.
+2. Cut `feat/d<N>-<name>` from main
 2. Review all persistent workspace files across agents (`assumptions.md`, `decisions.md`, `questions.md`, `links.md`) — prune stale/resolved entries
 3. Wipe all live files (`implementation.md`, `bugs.md`, `test-plan.md`, `outbox.md`, `status.md`) across all agents
 4. No init commit — Forge's first commit is the first thing in the PR diff
