@@ -1,1 +1,9 @@
-{}
+{
+  "permissions": {
+    "allow": [
+      "Bash(wsl:*)",
+      "Bash(gh repo:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

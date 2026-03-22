@@ -1,23 +1,72 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cd * && git show *)",
+      "Bash(cd *)",
       "Skill(update-config)",
       "Read",
       "Glob",
       "Grep",
-      "Agent",
+      "Agent(*)",
       "Edit(c:/Coding)",
       "Edit(c:/Coding/buddy-system/gradle/libs.versions.toml)",
       "Write(c:/Coding)",
       "Bash(find *)",
       "Bash(jar *)",
       "Bash(java *)",
-      "Bash(cat:*)",
-      "Bash(tail:*)",
-      "Bash(head:*)",
-      "Bash(grep:*)"
-      ]
+      "Bash(cat *)",
+      "Bash(tail *)",
+      "Bash(head *)",
+      "Bash(grep *)",
+      "Bash(npm *)",
+      "Bash(pnpm *)",
+      "Bash(git *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(cd * && git *)"
+    ]
+  },
+  "model": "sonnet",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/Users/cjsto/.claude/hooks/claude-notifier-on-stop.js\""
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/Users/cjsto/.claude/hooks/claude-notifier-on-permission.js\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/Users/cjsto/.claude/hooks/claude-notifier-on-question.js\""
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "github@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "firebase@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -27,6 +76,15 @@
       }
     }
   },
-  "autoUpdatesChannel": "latest",
-  "model": "sonnet"
+  "sandbox": {
+    "enabled": true,
+    "filesystem": {
+      "allowWrite": [
+        "~/.kube",
+        "/tmp/build"
+      ]
+    }
+  },
+  "effortLevel": "high",
+  "autoUpdatesChannel": "latest"
 }
