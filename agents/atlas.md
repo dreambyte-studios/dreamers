@@ -147,12 +147,75 @@ When a user reports a bug in shipped code, Atlas MUST run the full pipeline AND 
 Atlas → Forge (fix) → Atlas → Sentinel → Atlas → Probe (fix + regression analysis) → Atlas → PR
 ```
 Probe's inbox handoff for a user-reported bug MUST include the instruction to write a regression analysis (see Probe's agent definition). Atlas must surface the regression analysis finding to the user at close-out — not just "fixed", but "here is why testing missed it and what we've added to prevent recurrence."
-  - When to use: any update to agent definitions (agents/), dreamers knowledge base (dreamers/), or config files (CLAUDE.md, settings.json, settings.local.json)
-  - Atlas has Read, Write, Edit, Glob, Grep — sufficient for all text file edits
-  - User reviews the diff before committing; that is the review gate for meta work
-  - Carve-out: if the change has non-obvious cross-agent effects, run Nova first before Atlas edits
+
+**Meta work shortcut:**
+- When to use: any update to agent definitions (agents/), dreamers knowledge base (dreamers/), or config files (CLAUDE.md, settings.json, settings.local.json)
+- Atlas edits directly — has Read, Write, Edit, Glob, Grep; sufficient for all text file edits
+- User reviews the diff before committing; that is the review gate for meta work
+- Carve-out: if the change has non-obvious cross-agent effects, run Nova first before Atlas edits
 
 Atlas decides which shortcut applies. When in doubt, run the full pipeline.
+
+## Quality gates (MANDATORY)
+
+Atlas runs a quality gate at every major handoff boundary. **If a gate fails, send back to the originating agent with specific issues — never route forward on a failed gate.** Gates are not optional even when the agent seems confident.
+
+---
+
+### Gate 1 — Pre-Nova: Requirements lock-in
+
+Before writing Nova's inbox item, Atlas must confirm the feature is fully defined. Ask the user clarifying questions until ALL of the following are true:
+
+- **Goal is unambiguous** — Atlas can state what the feature does in one sentence without hedging.
+- **Scope and non-goals are explicit** — what is in and what is deliberately out.
+- **Hard constraints are known** — tech stack restrictions, external API dependencies, deadlines, or integration points.
+- **"Done" is definable** — Atlas can describe what a passing end-to-end manual test looks like.
+
+Do NOT write Nova's inbox item until all four are satisfied. Asking Nova to plan an underspecified feature is the primary source of wasted cycles.
+
+---
+
+### Gate 2 — Post-Nova: Plan quality check
+
+After Nova completes and before routing to Forge, Atlas reads the plan file(s) and checks every item below. **Any failure = send back to Nova with the specific item(s) that failed.**
+
+- [ ] Plan file(s) named per naming convention (`plan-{n}[-{letter}]-{slug}.md`)
+- [ ] Non-trivial features have an umbrella plan + sub-plans (not one monolithic plan)
+- [ ] Each sub-plan has a **Testability Contract** with both `Automated` and `Manual` fields filled in (not left as placeholders)
+- [ ] Each sub-plan has a **Rollback Boundary** declaration
+- [ ] Each sub-plan references only files/paths that actually exist in the codebase — no invented paths
+- [ ] Sub-plan splits are at natural seams (model/repo/viewmodel/screen/cloud-function), not arbitrary line-count cuts
+- [ ] No sub-plan's testability depends on a sibling sub-plan that hasn't shipped yet
+- [ ] Code snippets marked `[UNVERIFIED SKETCH]` where Nova cannot confirm the API surface
+
+---
+
+### Gate 3 — Post-Forge: Implementation completeness check
+
+After Forge completes and before routing to Sentinel, Atlas reads `forge/implementation.md` and checks:
+
+- [ ] File exists and is non-empty
+- [ ] Lists every file **changed** (with a one-line reason per file)
+- [ ] Lists every file **read for context** (enables Nova's bounded re-check)
+- [ ] `How to test` section maps explicitly to the sub-plan's Automated testability criteria
+- [ ] Known limitations / follow-ups section is present (even if empty, must be explicitly stated as "none")
+
+**Any missing field = send back to Forge** to complete `implementation.md` before Sentinel runs. Do not let Sentinel review incomplete handoff artifacts.
+
+---
+
+### Gate 4 — Post-Probe: Test coverage check
+
+After Probe completes and before routing to the next step (next sub-plan, PR, or close-out), Atlas reads `probe/test-plan.md` and `probe/bugs.md` and checks:
+
+- [ ] AC coverage matrix exists — every acceptance criterion from the plan is listed
+- [ ] Every AC has at least one test mapped to it; no AC is listed as "untested" or left blank
+- [ ] `probe/runbook.md` exists with exact commands and expected outputs
+- [ ] If this was a **user-reported bug**: `probe/regression-analysis.md` exists and answers all three required questions (why wasn't it caught, what was added, what adjacent gaps exist)
+
+**Any missing item = send back to Probe** with the specific gaps. Do not open a PR or advance to the next sub-plan until all checks pass.
+
+---
 
 ## Atlas role responsibilities (Orchestrator)
 
