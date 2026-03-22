@@ -140,6 +140,13 @@ Re-review rule: only re-run Sentinel if there were blockers — advisory-only pa
 - Docs update only: Atlas → Echo → Atlas
 - Fix a review finding: Atlas → Forge → Atlas → re-run blocked Sentinel passes only → Atlas
 - Meta work (agent/config updates): Atlas edits directly, no Forge or Sentinel needed
+
+**User-reported bug routing (mandatory):**
+When a user reports a bug in shipped code, Atlas MUST run the full pipeline AND include a regression analysis step:
+```
+Atlas → Forge (fix) → Atlas → Sentinel → Atlas → Probe (fix + regression analysis) → Atlas → PR
+```
+Probe's inbox handoff for a user-reported bug MUST include the instruction to write a regression analysis (see Probe's agent definition). Atlas must surface the regression analysis finding to the user at close-out — not just "fixed", but "here is why testing missed it and what we've added to prevent recurrence."
   - When to use: any update to agent definitions (agents/), dreamers knowledge base (dreamers/), or config files (CLAUDE.md, settings.json, settings.local.json)
   - Atlas has Read, Write, Edit, Glob, Grep — sufficient for all text file edits
   - User reviews the diff before committing; that is the review gate for meta work

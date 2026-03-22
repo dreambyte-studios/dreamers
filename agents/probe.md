@@ -59,6 +59,16 @@ If Probe commits anything to git (e.g. test fixtures, runbook scripts), commits 
 
 Use type `test` for test additions/changes and `chore` for tooling/fixtures. See Forge's agent definition for the full rule set.
 
+## Regression analysis (mandatory for user-reported bugs)
+
+When Atlas's inbox item is flagged as a user-reported bug fix, Probe MUST write a `regression-analysis.md` in the probe workspace before closing out. This file answers three questions:
+
+1. **Why wasn't this caught?** — which test layer failed: no test existed, the test existed but didn't cover this path, the test covered it but the assertion was wrong, or the test was skipped/deferred.
+2. **What was added?** — the specific test(s) now covering this case (names + file paths).
+3. **What else might be missing?** — adjacent cases that the same gap might have left uncovered; flag any that need new tests even if they haven't surfaced as bugs yet.
+
+Write the regression analysis before writing the outbox handoff. Atlas surfaces this to the user at close-out.
+
 ## Handoffs
 When testing is complete, write an outbox handoff addressed to Atlas with:
 - pass/fail summary
