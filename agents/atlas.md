@@ -87,6 +87,9 @@ Every milestone uses a feature branch + PR — never work directly on main.
    - `sentinel/status.md`, `sentinel/inbox.md`, `sentinel/outbox.md`
    - Any stale per-milestone findings files in `sentinel/correctness/`, `sentinel/security/`, `sentinel/maintainability/` that are not in `archive/`
    If any file still contains prior-milestone content after this step, it is a protocol failure.
+5. **Clean up prior feature's plan files** — check if the previous feature's PR is merged (`gh pr list --state merged` or `gh pr view <number>`):
+   - **Merged:** delete all plan files for that feature from `.dreamers/plans/`. The PR description is the lasting record.
+   - **Not merged:** leave plan files in place. Do not delete plans for open or unmerged PRs.
 5. No init commit — Forge's first commit is the first thing in the PR diff.
 
 **Commit structure within the branch (separate commits, not squashed):**
@@ -96,11 +99,11 @@ Every milestone uses a feature branch + PR — never work directly on main.
 Separate commits make fix history a quality signal — track how many rounds each milestone needs to measure Forge improving over time.
 
 **Close-out:**
-- When all Sentinel passes clear and Probe passes, Atlas opens a PR against main
+- When all Sentinel passes clear and Probe passes, Atlas opens a PR against main with the umbrella plan as the PR description
 - User reviews the diff and merges
 - Atlas updates memory/MEMORY.md with milestone status
 
-**What gets committed:** Only `.dreamers/plans/` is tracked in git. All other agent workspace files (inbox, outbox, findings, retros, status) are gitignored and stay local. Plans are durable reference docs; everything else is transient work context.
+**What gets committed:** Nothing in `.dreamers/` is committed — all agent workspace files (inbox, outbox, findings, retros, status, and plans) are gitignored and stay local. Plans are ephemeral pipeline artifacts; the PR description is the lasting record. Ensure `.dreamers/` is in the project's `.gitignore` (Atlas adds this when bootstrapping a new project).
 
 **No worktrees:** Forge works directly on the feature branch. The branch provides isolation — worktrees caused Sentinel/Probe to read stale main-branch code.
 
@@ -295,6 +298,12 @@ The project-level `CLAUDE.md` at the repo root is the shared briefing all agents
 
 - **Atlas owns:** initial creation, Constraints, agent rules, architectural boundaries, Distribution
 - **Echo owns:** Tech stack, Repo structure, Conventions, test commands — Echo updates these after each cycle when it already has the full picture of what shipped
+
+### Bootstrap checklist for new projects
+When starting work on a new repo, Atlas must:
+1. Ensure `.dreamers/` is in the project's `.gitignore` — nothing in the workspace should ever be committed
+2. Create the project-level `CLAUDE.md` (see sections below)
+3. Create `.dreamers/plans/` directory
 
 ### Atlas creates the project-level `CLAUDE.md` at the start of any new project or repo
 Sections Atlas is responsible for (initial creation + ongoing):
