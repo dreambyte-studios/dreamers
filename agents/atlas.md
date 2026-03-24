@@ -76,12 +76,22 @@ Atlas MUST read `.dreamers/atlas/improvements.md` at two moments:
 
 Every milestone uses a feature branch + PR — never work directly on main.
 
+**Startup verification (Atlas does this FIRST, before reading any workspace files):**
+1. `git fetch origin && git log origin/main --oneline -5` — anchor to remote truth before reading any `.dreamers/` files. Workspace files are local-only and may be stale. `origin/main` is the authoritative record of what is actually shipped.
+
 **Branch setup (Atlas does this before invoking Forge):**
-1. `git pull origin main` — always pull main before cutting a branch. Never build off a stale local main.
-2. Cut `feat/d<N>-<name>` from main
-2. Review all persistent workspace files across agents (`assumptions.md`, `decisions.md`, `questions.md`, `links.md`) — prune stale/resolved entries
-3. Wipe all live files (`implementation.md`, `bugs.md`, `test-plan.md`, `outbox.md`, `status.md`) across all agents
-4. No init commit — Forge's first commit is the first thing in the PR diff
+1. `git checkout main && git pull origin main` — never build off a stale local main.
+2. Cut `feat/d<N>-<name>` from main.
+3. Review all persistent workspace files across agents (`assumptions.md`, `decisions.md`, `questions.md`, `links.md`) — prune stale/resolved entries.
+4. Wipe all live files across **all** agents — every file in this list must be reset to "No active work / No pending items":
+   - `atlas/status.md`, `atlas/outbox.md`, `atlas/inbox.md`
+   - `forge/status.md`, `forge/inbox.md`, `forge/outbox.md`, and any `forge/implementation*.md`
+   - `nova/status.md`, `nova/inbox.md`, `nova/outbox.md`
+   - `probe/status.md`, `probe/inbox.md`, `probe/outbox.md`, `probe/bugs.md`, `probe/test-plan.md`, `probe/runbook.md`, and any `probe/*-test-plan.md`
+   - `sentinel/status.md`, `sentinel/inbox.md`, `sentinel/outbox.md`
+   - Any stale per-milestone findings files in `sentinel/correctness/`, `sentinel/security/`, `sentinel/maintainability/` that are not in `archive/`
+   If any file still contains prior-milestone content after this step, it is a protocol failure.
+5. No init commit — Forge's first commit is the first thing in the PR diff.
 
 **Commit structure within the branch (separate commits, not squashed):**
 - `feat(D<N>): initial implementation` — Forge first pass
@@ -153,13 +163,25 @@ Re-review rule: only re-run Sentinel if there were blockers — advisory-only pa
 - Docs update only: Atlas → Echo → Atlas
 - Fix a review finding: Atlas → Forge → Atlas → re-run blocked Sentinel passes only → Atlas
 - Meta work (agent/config updates): Atlas edits directly, no Forge or Sentinel needed
+- **Simple post-feature bug fix** (see below): Atlas → Forge → Probe → Atlas
 
-**User-reported bug routing (mandatory):**
-When a user reports a bug in shipped code, Atlas MUST run the full pipeline AND include a regression analysis step:
+**User-reported bug routing — two tiers:**
+
+*Tier 1 — Simple fix (all four must be true):*
+1. The feature it belongs to is fully shipped (PR merged)
+2. The bug is directly and obviously caused by the just-shipped feature
+3. The fix is clearly scoped (Atlas can describe the exact change in one sentence)
+4. No new logic, no new files, no data model changes — purely corrective
+
+Route: `Atlas → Forge → Atlas → Probe → Atlas`. Skip Nova and Sentinel. Probe verifies the fix passes and confirms nothing regressed. Forge commits directly to main (or a hotfix branch — check `PROJECT.md`).
+
+*Tier 2 — Full pipeline (anything that doesn't meet all four above):*
 ```
 Atlas → Forge (fix) → Atlas → Sentinel → Atlas → Probe (fix + regression analysis) → Atlas → PR
 ```
-Probe's inbox handoff for a user-reported bug MUST include the instruction to write a regression analysis (see Probe's agent definition). Atlas must surface the regression analysis finding to the user at close-out — not just "fixed", but "here is why testing missed it and what we've added to prevent recurrence."
+Probe's inbox handoff MUST include the instruction to write a regression analysis (see Probe's agent definition). Atlas surfaces the finding to the user at close-out — not just "fixed", but "here is why testing missed it and what we've added to prevent recurrence."
+
+When in doubt between tiers, use Tier 2.
 
 **Meta work shortcut:**
 - When to use: any update to agent definitions (agents/), dreamers knowledge base (dreamers/), or config files (CLAUDE.md, settings.json, settings.local.json)
