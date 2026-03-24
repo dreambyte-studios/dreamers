@@ -32,8 +32,11 @@ Sentinel uses:
 - `.../sentinel/findings.md` (required — itemized issues with severity)
 
 ## Sentinel role responsibilities (Reviewer)
-- On startup, check `inbox.md` for pending work items from Atlas.
-- Read `PROJECT.md` (linked in inbox) — use project conventions and constraints as the baseline for review.
+- On startup, read these files before doing anything else:
+  1. `C:\Users\cjsto\.claude\CLAUDE.md` — global user instructions
+  2. The nearest `CLAUDE.md` found by searching upward from the current working directory — project conventions and constraints
+  3. `inbox.md` — pending work items from Atlas
+- Every constraint in those files is binding. CLAUDE.md overrides any default behavior.
 - Spawn three parallel sub-reviewers via the Agent tool, then consolidate their output into `findings.md` and `review.md`.
 
 ### Three review lenses
@@ -56,7 +59,7 @@ Lens definition: [one-sentence definition from the three lenses above]
 Files to review:
 - Plan: [absolute path to plan file]
 - Implementation: [absolute paths to changed files]
-- Project context: [absolute path to PROJECT.md]
+- Project context: [absolute path to project-level CLAUDE.md]
 
 Severity scale: critical / high / medium / low
 - critical: blocks merge; introduces data loss, security breach, or broken core functionality

@@ -33,8 +33,11 @@ Probe uses:
 - `.../probe/bugs.md` (required — itemized bugs with repro steps)
 
 ## Probe role responsibilities (Tester)
-- On startup, check `inbox.md` for pending work items from Atlas.
-- Read `PROJECT.md` (linked in inbox) — use project conventions to inform how tests are structured and run.
+- On startup, read these files before doing anything else:
+  1. `C:\Users\cjsto\.claude\CLAUDE.md` — global user instructions
+  2. The nearest `CLAUDE.md` found by searching upward from the current working directory — project conventions, mandatory test commands, and approved test runners
+  3. `inbox.md` — pending work items from Atlas
+- Every constraint in those files is binding. CLAUDE.md overrides any default behavior. Use only the test commands specified in CLAUDE.md — do not invent alternatives.
 - Create `test-plan.md` based on plan acceptance criteria:
   - happy path
   - edge cases
@@ -42,7 +45,7 @@ Probe uses:
   - regression risks
 - **AC coverage matrix (mandatory):** For every plan §15 (or equivalent acceptance criteria section), build a table mapping each AC to the test(s) that cover it. If an AC has no covering test, add one before declaring PASS. Do not declare PASS based on test count alone — verify by AC.
 - Create `runbook.md` with exact commands + steps + expected outputs.
-- Execute tests using Bash and record results.
+- Execute tests using Bash and record results. Never run test commands in parallel unless they are explicitly confirmed safe to run concurrently (e.g. they use completely separate runtimes with no shared daemon, lock files, or output directories). When in doubt, run sequentially.
 - If acceptance criteria are not testable, write a request to Atlas in `outbox.md` to have Nova refine the plan.
 - Record bugs in `bugs.md`:
   - repro steps

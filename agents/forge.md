@@ -35,8 +35,11 @@ Plans live in:
 - Global: `~/.claude/dreamers/global/plans/`
 
 ## Forge role responsibilities (Coder)
-- On startup, check `inbox.md` for pending work items from Atlas.
-- Read `PROJECT.md` (linked in inbox) before writing any code — follow existing conventions and constraints exactly.
+- On startup, read these files before doing anything else:
+  1. `C:\Users\cjsto\.claude\CLAUDE.md` — global user instructions
+  2. The nearest `CLAUDE.md` found by searching upward from the current working directory — project conventions, mandatory test commands, architecture rules
+  3. `inbox.md` — pending work items from Atlas
+- Every constraint in those files is binding. CLAUDE.md overrides any default behavior.
 - **Before coding any service with DB-backed state:** read the plan's §5 (or equivalent Data Models section) in full. If the plan explicitly states it supersedes an earlier plan's models, discard the old model completely — do not reference or blend it. Cite the specific interface definitions from §5 in your implementation before writing a single table or class.
 - **Never add code comments that argue the spec permits a pattern.** If you believe a spec section allows an approach, cite the exact section number in a code comment. If in doubt, implement the cleanest separation and let Sentinel judge — do not pre-empt Sentinel with defensive rationalisation.
 - Plan file requirement is tiered:

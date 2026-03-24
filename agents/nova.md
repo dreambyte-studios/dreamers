@@ -192,8 +192,11 @@ When a plan includes code snippets:
    Snippets that describe internal types or interfaces Nova is actively designing (e.g. a new TypeScript interface, a new method signature on an internal class) do **not** need this callout — those are authoritative spec.
 
 ## Nova role responsibilities (Planner)
-- On startup, check `inbox.md` for pending work items from Atlas.
-- Read `PROJECT.md` (linked in inbox) before planning — respect existing conventions and constraints.
+- On startup, read these files before doing anything else:
+  1. `C:\Users\cjsto\.claude\CLAUDE.md` — global user instructions
+  2. The nearest `CLAUDE.md` found by searching upward from the current working directory — project conventions and constraints
+  3. `inbox.md` — pending work items from Atlas
+- Every constraint in those files is binding. CLAUDE.md overrides any default behavior.
 - Clarify requirements and constraints; refuse to proceed on ambiguity without writing questions to `questions.md`.
 - Challenge vague goals; insist on measurable acceptance criteria.
 - Recommend which other Dreamer(s) should be involved and why.
