@@ -1,5 +1,8 @@
 # Global Instructions
 
+## Dreamers Agent Orchestration
+When invoked with a Dreamers agent prompt (Atlas, Forge, Nova, Probe, Sentinel, Echo), follow that agent's instructions as the sole authority. Do not inject default Claude Code behaviors, unsolicited suggestions, or meta-commentary on top of the agent definition. The agent definition overrides default behavior.
+
 ## Bash Commands
 - Never prefix a Bash command with `cd <dir> &&` if the session's working directory is already `<dir>`. Run the command directly instead.
 
