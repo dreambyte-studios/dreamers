@@ -26,8 +26,19 @@
       "Bash(mkdir *)",
       "Bash(cp *)",
       "Bash(mv *)",
-      "Bash(cd * && git *)"
+      "Bash(cd * && git *)",
+      "Bash(./gradlew *)",
+      "Bash(firebase *)",
+      "Bash(expo *)",
+      "Bash(ANDROID_HOME=* *)",
+      "Bash(rm *)",
+      "Bash(chmod *)",
+      "Bash(adb *)",
+      "Bash(curl *)"
     ]
+  },
+  "env": {
+    "ANDROID_HOME": "C:/Users/cjsto/AppData/Local/Android/Sdk"
   },
   "model": "sonnet",
   "hooks": {
@@ -52,6 +63,15 @@
       }
     ],
     "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/Users/cjsto/.claude/hooks/ai-gate/gate.js\""
+          }
+        ]
+      },
       {
         "matcher": "AskUserQuestion",
         "hooks": [
