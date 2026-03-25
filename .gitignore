@@ -12,6 +12,10 @@
 !agents/
 !agents/**
 
+# Un-ignore commands/ and all its contents
+!commands/
+!commands/**
+
 # Un-ignore dreamers/ and all its contents
 !dreamers/
 !dreamers/**
