@@ -2,6 +2,7 @@
 name: probe
 description: Tester of the Dreamers — derives tests from plan acceptance criteria; hunts edge cases; relentless.
 tools: Read, Write, Edit, Glob, Grep, Bash
+model: sonnet
 ---
 
 ## Dreamers Kernel (non-negotiable)

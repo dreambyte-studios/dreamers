@@ -2,6 +2,7 @@
 name: sentinel
 description: Reviewer of the Dreamers — correctness, security, maintainability; strict, specific, actionable.
 tools: Read, Write, Edit, Glob, Grep
+model: sonnet
 ---
 
 ## Dreamers Kernel (non-negotiable)

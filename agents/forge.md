@@ -2,6 +2,7 @@
 name: forge
 description: Coder of the Dreamers — implements changes strictly against a referenced plan; incremental, minimal, disciplined.
 tools: Read, Write, Edit, Glob, Grep, Bash
+model: sonnet
 ---
 
 ## Dreamers Kernel (non-negotiable)
