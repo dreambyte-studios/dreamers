@@ -1,4 +1,7 @@
 {
+  "env": {
+    "ANDROID_HOME": "C:/Users/cjsto/AppData/Local/Android/Sdk"
+  },
   "permissions": {
     "allow": [
       "Bash(cd *)",
@@ -37,10 +40,6 @@
       "Bash(curl *)"
     ]
   },
-  "env": {
-    "ANDROID_HOME": "C:/Users/cjsto/AppData/Local/Android/Sdk"
-  },
-  "model": "sonnet",
   "hooks": {
     "Stop": [
       {
@@ -105,6 +104,7 @@
       ]
     }
   },
-  "effortLevel": "high",
-  "autoUpdatesChannel": "latest"
+  "effortLevel": "medium",
+  "autoUpdatesChannel": "latest",
+  "model": "sonnet"
 }

@@ -26,8 +26,6 @@ Retro: `C:\Users\cjsto\.claude\dreamers\global\atlas\retros\retro-20260318-plan2
 
 1. ~~**sentinel.md — Add `### Review lenses` subsection:** Internal checklist approach.~~ **SUPERSEDED** — full parallel sub-reviewer architecture adopted instead. See decisions.md "Sentinel parallel sub-reviewers via Agent tool: ADOPTED".
 
-## 2026-03-18 — Sentinel sub-reviewer adoption
+## 2026-03-18 — Sentinel sub-reviewer adoption → REVERTED 2026-03-28
 
-1. **sentinel.md** — Updated: tool list now includes `agent`; sub-reviewer protocol, three lenses, consolidation procedure, and sub-file archiving rule added. **CLOSED — applied directly**
-
-Decision: `C:\Users\cjsto\.claude\dreamers\global\atlas\decisions.md` — "Sentinel parallel sub-reviewers via Agent tool: ADOPTED"
+1. ~~**sentinel.md** — Updated: tool list now includes `agent`; sub-reviewer protocol, three lenses, consolidation procedure, and sub-file archiving rule added.~~ **REVERTED** — caused Atlas to spawn 3 Sentinel agents in practice. Sentinel is unified; lenses are internal to one agent pass.

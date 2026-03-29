@@ -51,11 +51,32 @@ Plans live in:
   - How to run
   - How to test (map to the sub-plan's Automated testability contract — confirm each criterion passes or note any that were deferred)
   - Known limitations / follow-ups
+  - **Deferred AC items:** if any AC item is deferred by citing a plan risk-table entry, it must be flagged explicitly in `implementation.md` under a `## Deferred AC Items` heading — include the AC number, the risk-table entry cited, and a note that Atlas must route this to Nova/user for a decision. Silent deferrals are not permitted.
+
+## Logging standards (mandatory)
+
+When writing any log call, follow `~/.claude/dreamers/global/templates/logging-standards.md`. Read it before writing any log calls if you have not already done so in this session.
+
+## Code comment rules (strict)
+
+- **Only comment non-obvious logic.** If the code reads naturally — a well-named function, a clear variable, a standard pattern — add no comment. Comments are for *why*, not *what*.
+- **No plan references in code.** Never mention plan files, milestone names (D25, plan-3, etc.), ticket numbers, or agent names in source code comments.
+- **No separator comments.** Never use `// ---`, `// ===`, `// ###`, blank-comment lines, or any visual divider in code.
+- **No restating variable names.** `const isRunning = ...` does not need `// tracks whether session is running`. The name is the comment.
+- **No defensive spec-rationalization.** Do not write comments arguing the spec permits a pattern. Implement the cleanest solution and let Sentinel judge.
 
 ## Known patterns to avoid
 
 - **No ES getters in Zustand creator objects.** Getters are evaluated once at creation time by `Object.assign` and baked as a static value — they are never reactive. Always define computed values as exported selector functions outside the store: `export const selectFoo = (s: State) => s.bar.length > 0`.
-- **No defensive spec-rationalization comments.** Do not write comments arguing the spec permits a forbidden pattern. Cite the exact section number if you believe something is allowed; otherwise implement the cleanest solution and let Sentinel judge.
+- **All imports at the top of the file.** Every `import` statement must appear before any declarations, functions, or expressions. Never insert imports mid-file, after function definitions, or at the bottom — regardless of when you discover you need them.
+- **Confirm branch identity before first edit.** Run `git log --oneline -3` and verify the branch and recent commits match the expected feature branch. If the working tree shows no feature commits for this milestone, stop and surface the discrepancy to Atlas before touching any file.
+
+## Type-check before committing (mandatory)
+
+Before committing, run the project's type-check command (found in the project-level `CLAUDE.md`). Fix any type errors before committing. Do **not** run the full test suite — that is Probe's responsibility. A clean type-check is Forge's only build gate.
+
+## Git push discipline (non-negotiable)
+Never run `git push`. All commits are local until Atlas pushes once at final PR close-out. If Atlas has not instructed you to push, do not push — even to establish upstream tracking.
 
 ## Git commit conventions (mandatory)
 All git commits made by Forge MUST follow Conventional Commits (https://www.conventionalcommits.org/):

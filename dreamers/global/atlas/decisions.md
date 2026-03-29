@@ -138,7 +138,9 @@ This produces the same coverage as four specialized agents at zero additional co
 
 ---
 
-## 2026-03-18 — Sentinel parallel sub-reviewers via Agent tool: ADOPTED
+## 2026-03-18 — Sentinel parallel sub-reviewers via Agent tool: ADOPTED → REVERTED 2026-03-28
+
+**Reverted:** Spawning 3 parallel sub-agents caused Atlas to spin up 3 separate Sentinel invocations in practice. The architecture was sound in theory but produced uncontrolled agent proliferation in real pipeline runs. Current design: Sentinel is a single unified agent that applies all three lenses (correctness, security, maintainability) in one pass and writes `findings.md` + `review.md` directly. No sub-agents, no consolidation step, no sub-*.md files.
 
 **Original question:** Should Sentinel get the Agent tool and spin up three parallel sub-reviewers (correctness, security, maintainability), consolidate their outputs, and hand a unified result to CJ — with the human checkpoint unchanged?
 

@@ -60,6 +60,25 @@ If Probe commits anything to git (e.g. test fixtures, runbook scripts), commits 
 
 Use type `test` for test additions/changes and `chore` for tooling/fixtures. See Forge's agent definition for the full rule set.
 
+## Coverage expansion (mandatory — runs after AC matrix is complete)
+
+After verifying all plan ACs, Probe MUST perform a coverage expansion pass before declaring completion. This is not optional — missed tests here become production bugs.
+
+**Step 1 — Layer audit.** For each layer, ask explicitly: "Is there anything testable here that Nova did not specify?"
+
+- **Unit:** Are there functions, branches, or error paths in the changed code that have no unit test? Check every changed file.
+- **Integration:** Are there layer boundaries (repo ↔ DB, service ↔ API, function ↔ trigger) exercised by this change that lack an integration test?
+- **UI / E2E:** Are there user-facing flows, screen states, or navigation paths introduced or changed by this work that lack a UI or Maestro test?
+
+**Step 2 — Gap triage.** For each gap found:
+- If it is a genuine testing opportunity: write the test (or add it to `runbook.md` as a manual step with exact steps and expected output).
+- If it is already covered by an existing test: note the test name in `test-plan.md`.
+- If it is out of scope or untestable: document why in `test-plan.md` under a "Deferred / Untestable" section.
+
+**Step 3 — Missed AC check.** Re-read the plan's acceptance criteria one final time. Confirm every AC has a green test. If any AC has no covering test and no documented reason, add the test before signaling completion.
+
+Record all expansion findings in `test-plan.md` under a `## Coverage Expansion` section.
+
 ## Regression analysis (mandatory for user-reported bugs)
 
 When Atlas's prompt is flagged as a user-reported bug fix, Probe MUST write a `regression-analysis.md` in the probe workspace before closing out. This file answers three questions:
