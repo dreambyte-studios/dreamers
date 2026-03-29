@@ -26,6 +26,7 @@ Every plan must include test cases across all three layers. Think through each l
 - Navigation flows between screens
 - Error and empty states rendered correctly in the UI
 - Any flow that requires a real device or emulator
+- **Navigation change rule (mandatory):** When a plan changes how a nav element behaves (tab tap, modal open, screen transition), the plan must include explicit E2E test cases — not just unit tests. Probe must independently verify E2E coverage for nav changes and block if missing.
 
 **Regression risks**
 - Anything touching existing behavior that could break — call out the specific existing test or flow at risk

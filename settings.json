@@ -49,6 +49,14 @@
             "command": "node \"C:/Users/cjsto/.claude/hooks/claude-notifier-on-stop.js\""
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/Users/cjsto/.claude/hooks/request-logger/logger.js\""
+          }
+        ]
       }
     ],
     "PermissionRequest": [
@@ -57,6 +65,17 @@
           {
             "type": "command",
             "command": "node \"C:/Users/cjsto/.claude/hooks/claude-notifier-on-permission.js\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/Users/cjsto/.claude/hooks/request-logger/logger.js\""
           }
         ]
       }
@@ -106,5 +125,5 @@
   },
   "effortLevel": "medium",
   "autoUpdatesChannel": "latest",
-  "model": "sonnet"
+  "autoMemoryEnabled": false
 }

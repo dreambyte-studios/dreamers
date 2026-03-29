@@ -19,7 +19,7 @@ After Phase 1 (or immediately if no questions), present this proposal block and 
 ---
 **Goal:** [one sentence]
 **Scope:** [what is in]
-**Non-goals:** [what is deliberately out]
+**Non-goals:** [only if scope is genuinely ambiguous or there's real risk of over-building — omit by default]
 **Acceptance criteria:**
 1. [AC 1]
 2. [AC 2]
