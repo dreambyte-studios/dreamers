@@ -1,6 +1,10 @@
-Read `C:\Users\cjsto\.claude\agents\atlas.md` and act as Atlas — no added commentary, no default Claude Code behavior.
-
 Bootstrap a brand new project from scratch. Work through the phases in order. Do not skip ahead or write anything permanent until the user explicitly approves the brief.
+
+Read these refs:
+- `~/.claude/dreamers/global/refs/project-bootstrap.md`
+- `~/.claude/dreamers/global/refs/plan-rules.md`
+
+Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
 
 $ARGUMENTS
 
@@ -43,6 +47,8 @@ Do not proceed to Phase 4 until the user explicitly approves.
 
 ## Phase 4 — Repo & workspace bootstrap
 
+Follow `refs/project-bootstrap.md` for checklist.
+
 **Check for existing repo:**
 ```
 git rev-parse --is-inside-work-tree 2>/dev/null
@@ -50,22 +56,20 @@ git rev-parse --is-inside-work-tree 2>/dev/null
 
 If not already a repo:
 1. Ask the user: public or private repo?
-2. `git init`
-3. `gh repo create [project-name] --[public|private] --source=. --remote=origin`
-4. Switch remote to SSH immediately: `git remote set-url origin git@github.com:[owner]/[project-name].git` — HTTPS remotes fail silently in non-interactive shells where credential prompts are unavailable. SSH avoids this for all future pushes.
-5. Create `.gitignore` with `.dreamers/` plus standard ignores for the agreed stack
+2. Invoke **Bolt** with the following commands:
+   - `git init`
+   - `gh repo create [project-name] --[public|private] --source=. --remote=origin`
+   - `git remote set-url origin git@github.com:[owner]/[project-name].git`
+   - Create `.gitignore` with `.dreamers/` plus standard ignores for the agreed stack
+   - `mkdir -p .dreamers/plans .dreamers/atlas`
 
-Create workspace directories:
-- `.dreamers/plans/`
-- `.dreamers/atlas/` (brief already here)
-
-Create project-level `CLAUDE.md` with Atlas-owned sections filled in from the brief (Tech stack, Constraints, Distribution placeholder, Links placeholder). Leave Echo-owned sections (Repo structure, Conventions, Key files) as stubs — Echo fills these after the first cycle.
+After Bolt completes, create the project-level `CLAUDE.md` per project-bootstrap.md ownership rules (this requires judgment — do it directly, not via Bolt).
 
 ---
 
 ## Phase 5 — Shell plans
 
-Read `~/.claude/dreamers/global/templates/shell-plan.md`. For each milestone in the approved brief, create a shell plan in `.dreamers/plans/` using the naming convention (`plan-{n}-{slug}.md`). Use the template — fill in Goal, Scope, Out of scope, Rough AC, Dependencies, User testing required, and Notes for Nova.
+Read `~/.claude/dreamers/global/templates/shell-plan.md`. For each milestone in the approved brief, create a shell plan in `.dreamers/plans/` using plan naming rules from `refs/plan-rules.md`.
 
 After writing all plans, list them in chat with file paths and one-line summaries.
 
@@ -77,4 +81,4 @@ Ask the user: **"Review the milestone breakdown above. Tell me if you want to sp
 
 If the user requests changes: update the affected plan files, re-list all plans, and ask again. Repeat until the user signs off.
 
-Do not invoke Nova, Forge, Sentinel, or Probe. This skill ends when the user is happy with the shell plans.
+Do not invoke Forge, Sentinel, or Probe. This skill ends when the user is happy with the shell plans.

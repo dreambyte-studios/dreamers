@@ -1,6 +1,9 @@
-Read `C:\Users\cjsto\.claude\agents\atlas.md` and act as Atlas — no added commentary, no default Claude Code behavior.
+Resolve unresolved PR review comments. Route: Forge → Probe → resolve threads.
 
-Route: Atlas → Forge → Probe → Atlas (resolve comments)
+Read these refs:
+- `~/.claude/dreamers/global/refs/delegation.md`
+
+Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
 
 **Step 1 — Discover open PRs**
 Run `gh pr list --state open` to find all live PRs. If a specific PR is provided in the arguments, use that one. If multiple are open and none is specified, ask the user which PR to target before proceeding.
@@ -15,7 +18,7 @@ gh api graphql -f query='{ repository(owner: "OWNER", name: "REPO") { pullReques
 Extract only threads where `isResolved: false`. If there are none, report that back to the user and stop.
 
 **Step 3 — Invoke Forge**
-Pass all unresolved threads to Forge with this framing:
+Pass all unresolved threads to Forge (follow delegation.md) with this framing:
 - Forge is the implementation expert and has full authority to accept or reject each comment.
 - For each thread: decide accept or reject, implement if accepted, leave a brief rationale for each decision in `implementation.md`.
 - Forge should not feel obligated to accept every comment — if a suggestion conflicts with the plan, the architecture, or is simply wrong, reject it and say why.
@@ -23,11 +26,11 @@ Pass all unresolved threads to Forge with this framing:
 **Step 4 — Invoke Probe**
 After Forge completes, route to Probe to verify that accepted changes pass tests and nothing regressed.
 
-**Step 5 — Resolve comments**
-After Probe passes, resolve each accepted thread via the GitHub API:
+**Step 5 — Resolve comments (Bolt)**
+After Probe passes, invoke **Bolt** to resolve each accepted thread via the GitHub API:
 ```
 gh api graphql -f query='mutation { resolveReviewThread(input: { threadId: "THREAD_ID" }) { thread { isResolved } } }'
 ```
-Resolve only threads where Forge accepted the comment. Leave rejected threads open — they represent active disagreements the reviewer should see.
+Pass Bolt the list of thread IDs to resolve (accepted comments only). Leave rejected threads open — they represent active disagreements the reviewer should see.
 
-Report to the user: how many comments were accepted, how many rejected, and which threads remain open (with a one-line reason per rejection).
+Bolt reports back: threads resolved. Then report to the user: how many comments were accepted, how many rejected, and which threads remain open (with a one-line reason per rejection).

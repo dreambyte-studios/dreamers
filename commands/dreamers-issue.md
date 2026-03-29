@@ -15,7 +15,7 @@ Run `gh label list` to see available labels. Pick the most appropriate existing 
 **Step 3 — Draft the issue**
 Write a focused, surface-level issue. The goal is to capture enough context for a planner to understand scope — not to solve the problem.
 
-Use the template at `~/.claude/dreamers/global/templates/github-issue.md` as the structure. Keep the body concise — no padding, no restatement of the title. Nova will plan the details.
+Use the template at `~/.claude/dreamers/global/templates/github-issue.md` as the structure. Keep the body concise — no padding, no restatement of the title.
 
 **Step 4 — Create**
 Run `gh issue create` with the drafted title, body, and label(s). Report the issue URL when done.

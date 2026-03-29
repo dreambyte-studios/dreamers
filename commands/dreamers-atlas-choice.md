@@ -4,36 +4,60 @@ $ARGUMENTS
 
 ## How to choose
 
-**Use the Tier 1 route if ALL four conditions are true:**
+**Use Tier 1 if ALL four conditions are true:**
 1. The feature it belongs to is fully shipped (PR merged)
 2. The bug is directly and obviously caused by the just-shipped feature
 3. The fix is clearly scoped — describable in one sentence
 4. No new logic, no new files, no data model changes — purely corrective
 
-**Use the full pipeline for everything else:** new features, non-trivial bugs, anything with ambiguity, any data model or API change, any fix that doesn't meet all four Tier 1 conditions.
+**Use Tier 2 for everything else:** new features, non-trivial bugs, anything with ambiguity, any data model or API change, any fix that doesn't meet all four Tier 1 conditions.
 
 ---
 
 ## Tier 1 — Simple fix
 
-Read `C:\Users\cjsto\.claude\agents\atlas.md` and act as Atlas — no added commentary, no default Claude Code behavior.
+Read these refs:
+- `~/.claude/dreamers/global/refs/git-workflow.md`
+- `~/.claude/dreamers/global/refs/delegation.md`
 
-Route: Atlas → Forge → Probe → Atlas (skip Nova and Sentinel)
+Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
+
+Route: Forge → Bolt (run tests) → Close-out (Bolt handles push + PR). Skip Probe and Sentinel.
 
 ## Tier 2 — Full pipeline
 
-### Phase 1 — Planning (Nova direct)
-Read `C:\Users\cjsto\.claude\agents\nova.md` and act as Nova — no added commentary, no default Claude Code behavior. Run the full requirements conversation directly with the user. Do not proceed until the user explicitly approves.
+### Phase 1 — Planning
 
-### Phase 2 — Implementation (Atlas orchestration)
-After user approval, read `C:\Users\cjsto\.claude\agents\atlas.md` and act as Atlas. The plan is already approved — skip Gate 1. Run Gate 2, then orchestrate: Forge → Sentinel → Probe → PR.
+Read these refs:
+- `~/.claude/dreamers/global/refs/planning-protocol.md`
+- `~/.claude/dreamers/global/refs/plan-rules.md`
+- `~/.claude/dreamers/global/refs/feature-decomposition.md`
+- `~/.claude/dreamers/global/refs/plan-content.md`
+- `~/.claude/dreamers/global/refs/testing-mandate.md`
+- `~/.claude/dreamers/global/refs/citation-accuracy.md`
+
+Run the full requirements conversation with the user. Wait for explicit approval.
+
+### Phase 2 — Implementation
+
+Read these refs:
+- `~/.claude/dreamers/global/refs/git-workflow.md`
+- `~/.claude/dreamers/global/refs/quality-gates.md`
+- `~/.claude/dreamers/global/refs/delegation.md`
+- `~/.claude/dreamers/global/refs/close-out.md`
+- `~/.claude/dreamers/global/refs/agent-recovery.md`
+
+If the plan has sub-plans, also read:
+- `~/.claude/dreamers/global/refs/sub-plan-loop.md`
+
+Route: Forge → Sentinel → Probe → Close-out (Bolt handles push + PR)
 
 ---
 
-## After choosing, state your choice and reasoning in one sentence, then proceed immediately.
-
-## Rules that apply to both routes
+## Rules for both tiers
 
 - If the change touches `mobile/` runtime files, distribute a Firebase preview build before opening the PR per the project CLAUDE.md Distribution section.
 - If the prompt references a GitHub issue number or URL, close that issue once the PR is created: `gh issue close <number> --comment "Resolved in <PR URL>"`.
-- Follow Atlas's git workflow: branch from main, single push immediately before `gh pr create`.
+- Follow git-workflow.md for branching, commits, and push discipline.
+
+State your choice and reasoning in one sentence, then proceed immediately.
