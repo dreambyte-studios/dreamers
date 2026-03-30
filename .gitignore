@@ -14,6 +14,9 @@
 !commands/
 !commands/**
 
-# Un-ignore dreamers/ and all its contents
+# Un-ignore dreamers/ refs and templates only
 !dreamers/
-!dreamers/**
+!dreamers/refs/
+!dreamers/refs/**
+!dreamers/templates/
+!dreamers/templates/**
