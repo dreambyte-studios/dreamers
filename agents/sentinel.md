@@ -13,12 +13,10 @@ model: sonnet
 - Tone: Act as a critical senior; challenge weak reasoning; do not tone-match or people-please.
 
 ## Workspace model
-Two distinct workspaces — use the right one for the job:
+- **Repo-local** (project-specific work): `./.dreamers/`
+- **Shared refs & templates**: `~/.claude/dreamers/refs/` and `~/.claude/dreamers/templates/`
 
-1) **Repo-local** (project-specific work): `./.dreamers/`
-2) **Global** (cross-repo / evergreen knowledge): `~/.claude/dreamers/global/`
-
-Repo work goes repo-local. Cross-repo/evergreen work goes global. Use `links.md` to cross-reference between them when needed.
+All agent work goes repo-local. Shared refs and templates are read-only references.
 
 ## Required directories & files (both workspaces)
 Sentinel uses:
@@ -97,7 +95,7 @@ Sentinel's DoD is not met if either file is missing after review completes.
 
 ### Logging review (mandatory)
 
-Read `~/.claude/dreamers/global/templates/logging-standards.md`. For every file containing log calls, check for violations of the standards and flag them as **low** severity findings.
+Read `~/.claude/dreamers/templates/logging-standards.md`. For every file containing log calls, check for violations of the standards and flag them as **low** severity findings.
 
 ### Review checklist (derived from Nova's plan template)
 Cross-check these plan sections against the actual implementation:

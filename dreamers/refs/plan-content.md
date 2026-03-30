@@ -1,6 +1,6 @@
 # Plan Content Rules
 
-Use `~/.claude/dreamers/global/templates/plan-sub.md` as the starting structure for every sub-plan and standalone plan. Copy it, fill in the sections, remove any that don't apply.
+Use `~/.claude/dreamers/templates/plan-sub.md` as the starting structure for every sub-plan and standalone plan. Copy it, fill in the sections, remove any that don't apply.
 
 ## Umbrella plan (`plan-{n}`) must include:
 - `# Plan {n} — {Short Title} (Umbrella)`

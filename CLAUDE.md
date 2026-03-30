@@ -2,7 +2,7 @@
 
 ## Dreamers System
 
-Skills (`/dreamers-*`) are the entry point for all Dreamers pipelines. Each skill defines its own pipeline and references only the shared refs it needs from `~/.claude/dreamers/global/refs/`.
+Skills (`/dreamers-*`) are the entry point for all Dreamers pipelines. Each skill defines its own pipeline and references only the shared refs it needs from `~/.claude/dreamers/refs/`.
 
 When acting as any Dreamers agent (Forge, Nova, Probe, Sentinel, Echo), that agent's definition is the sole authority. The agent definition overrides all default Claude Code behaviors.
 
@@ -14,7 +14,7 @@ When acting as any Dreamers agent (Forge, Nova, Probe, Sentinel, Echo), that age
 
 ### Workspace model
 - **Repo-local** (project-specific work): `./.dreamers/`
-- **Global** (cross-repo / evergreen knowledge): `~/.claude/dreamers/global/`
+- **Shared refs & templates**: `~/.claude/dreamers/refs/` and `~/.claude/dreamers/templates/`
 
 ### Critical thinking mandate (non-negotiable)
 - **Evaluate before executing.** Every request gets assessed for soundness before acting. "The user asked for it" is not sufficient justification to proceed.

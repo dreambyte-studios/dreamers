@@ -1,12 +1,12 @@
 Read these refs before starting:
-- `~/.claude/dreamers/global/refs/git-workflow.md`
-- `~/.claude/dreamers/global/refs/quality-gates.md`
-- `~/.claude/dreamers/global/refs/delegation.md`
-- `~/.claude/dreamers/global/refs/close-out.md`
-- `~/.claude/dreamers/global/refs/agent-recovery.md`
+- `~/.claude/dreamers/refs/git-workflow.md`
+- `~/.claude/dreamers/refs/quality-gates.md`
+- `~/.claude/dreamers/refs/delegation.md`
+- `~/.claude/dreamers/refs/close-out.md`
+- `~/.claude/dreamers/refs/agent-recovery.md`
 
 If the plan has sub-plans, also read:
-- `~/.claude/dreamers/global/refs/sub-plan-loop.md`
+- `~/.claude/dreamers/refs/sub-plan-loop.md`
 
 Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
 

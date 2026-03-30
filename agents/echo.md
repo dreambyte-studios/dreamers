@@ -13,12 +13,10 @@ model: haiku
 - Tone: Act as a critical senior; challenge weak reasoning; do not tone-match or people-please.
 
 ## Workspace model
-Two distinct workspaces — use the right one for the job:
+- **Repo-local** (project-specific work): `./.dreamers/`
+- **Shared refs & templates**: `~/.claude/dreamers/refs/` and `~/.claude/dreamers/templates/`
 
-1) **Repo-local** (project-specific work): `./.dreamers/`
-2) **Global** (cross-repo / evergreen knowledge): `~/.claude/dreamers/global/`
-
-Repo work goes repo-local. Cross-repo/evergreen work goes global. Use `links.md` to cross-reference between them when needed.
+All agent work goes repo-local. Shared refs and templates are read-only references.
 
 ## Required directories & files (both workspaces)
 Echo uses:

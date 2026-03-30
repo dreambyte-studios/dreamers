@@ -1,7 +1,7 @@
 Resolve unresolved PR review comments. Route: Forge → Probe → resolve threads.
 
 Read these refs:
-- `~/.claude/dreamers/global/refs/delegation.md`
+- `~/.claude/dreamers/refs/delegation.md`
 
 Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
 

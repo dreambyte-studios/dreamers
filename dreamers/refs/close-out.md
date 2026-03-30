@@ -6,7 +6,7 @@ Run this when all Sentinel passes clear and Probe passes.
 
 Invoke **Bolt** (Haiku subagent) for the mechanical PR steps. Pass Bolt:
 1. Branch name to push: `git push -u origin <branch-name>`
-2. PR title and body (use template at `~/.claude/dreamers/global/templates/pr-description.md` — prepare the content before invoking Bolt)
+2. PR title and body (use template at `~/.claude/dreamers/templates/pr-description.md` — prepare the content before invoking Bolt)
 3. Base branch (usually `main`)
 4. If the original task referenced a GitHub issue number or URL, include it so Bolt can close it: `gh issue close <number> --comment "Resolved in <PR URL>"`
 
@@ -27,7 +27,7 @@ Bolt reports back: PR URL, issue closed (if applicable). User reviews the diff a
 
 ## Post-PR
 1. **Surface improvements** from this cycle's retro — one sentence each. Ask: "Should I address any of these?" Do not apply without user go-ahead.
-2. **Memory contradiction scan:** Read all files in `~/.claude/projects/[repo]/memory/` AND `~/.claude/dreamers/global/`. Check for: tech stack drift, architecture pivots not propagated, milestone status fallen behind, rule conflicts across agent definitions. **Propose all memory changes — do not auto-apply.**
+2. **Memory contradiction scan:** Read all files in `~/.claude/projects/[repo]/memory/`. Check for: tech stack drift, architecture pivots not propagated, milestone status fallen behind, rule conflicts across agent definitions. **Propose all memory changes — do not auto-apply.**
 
 ## Rules for improvement suggestions
 - Propose only; never auto-apply changes to agent files or refs.

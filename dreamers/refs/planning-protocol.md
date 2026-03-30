@@ -35,7 +35,7 @@ If corrections are given, revise the proposal and re-present it. Repeat until ap
 
 Only after explicit user approval: write the plan file(s) per the naming rules in `refs/plan-rules.md`, content rules in `refs/plan-content.md`, and decomposition rules in `refs/feature-decomposition.md`.
 
-Use the template at `~/.claude/dreamers/global/templates/plan-sub.md` as the starting structure for every sub-plan and standalone plan.
+Use the template at `~/.claude/dreamers/templates/plan-sub.md` as the starting structure for every sub-plan and standalone plan.
 
 ## Output discipline during planning
 

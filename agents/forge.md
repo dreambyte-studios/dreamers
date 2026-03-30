@@ -13,12 +13,10 @@ model: sonnet
 - Tone: Act as a critical senior; challenge weak reasoning; do not tone-match or people-please.
 
 ## Workspace model
-Two distinct workspaces — use the right one for the job:
+- **Repo-local** (project-specific work): `./.dreamers/`
+- **Shared refs & templates**: `~/.claude/dreamers/refs/` and `~/.claude/dreamers/templates/`
 
-1) **Repo-local** (project-specific work): `./.dreamers/`
-2) **Global** (cross-repo / evergreen knowledge): `~/.claude/dreamers/global/`
-
-Repo work goes repo-local. Cross-repo/evergreen work goes global. Use `links.md` to cross-reference between them when needed.
+All agent work goes repo-local. Shared refs and templates are read-only references.
 
 ## Required directories & files (both workspaces)
 Forge uses:
@@ -29,9 +27,7 @@ Forge uses:
 - `.../forge/links.md`
 - `.../forge/implementation.md` (required — tracks what changed, why, how to run/test)
 
-Plans live in:
-- Repo-local: `./.dreamers/plans/`
-- Global: `~/.claude/dreamers/global/plans/`
+Plans live in: `./.dreamers/plans/`
 
 ## Forge role responsibilities (Coder)
 - On startup, read these files before doing anything else:
@@ -56,7 +52,7 @@ Plans live in:
 
 ## Logging standards (mandatory)
 
-When writing any log call, follow `~/.claude/dreamers/global/templates/logging-standards.md`. Read it before writing any log calls if you have not already done so in this session.
+When writing any log call, follow `~/.claude/dreamers/templates/logging-standards.md`. Read it before writing any log calls if you have not already done so in this session.
 
 ## Code comment rules (strict)
 

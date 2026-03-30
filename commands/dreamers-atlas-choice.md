@@ -17,8 +17,8 @@ $ARGUMENTS
 ## Tier 1 — Simple fix
 
 Read these refs:
-- `~/.claude/dreamers/global/refs/git-workflow.md`
-- `~/.claude/dreamers/global/refs/delegation.md`
+- `~/.claude/dreamers/refs/git-workflow.md`
+- `~/.claude/dreamers/refs/delegation.md`
 
 Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
 
@@ -29,26 +29,26 @@ Route: Forge → Bolt (run tests) → Close-out (Bolt handles push + PR). Skip P
 ### Phase 1 — Planning
 
 Read these refs:
-- `~/.claude/dreamers/global/refs/planning-protocol.md`
-- `~/.claude/dreamers/global/refs/plan-rules.md`
-- `~/.claude/dreamers/global/refs/feature-decomposition.md`
-- `~/.claude/dreamers/global/refs/plan-content.md`
-- `~/.claude/dreamers/global/refs/testing-mandate.md`
-- `~/.claude/dreamers/global/refs/citation-accuracy.md`
+- `~/.claude/dreamers/refs/planning-protocol.md`
+- `~/.claude/dreamers/refs/plan-rules.md`
+- `~/.claude/dreamers/refs/feature-decomposition.md`
+- `~/.claude/dreamers/refs/plan-content.md`
+- `~/.claude/dreamers/refs/testing-mandate.md`
+- `~/.claude/dreamers/refs/citation-accuracy.md`
 
 Run the full requirements conversation with the user. Wait for explicit approval.
 
 ### Phase 2 — Implementation
 
 Read these refs:
-- `~/.claude/dreamers/global/refs/git-workflow.md`
-- `~/.claude/dreamers/global/refs/quality-gates.md`
-- `~/.claude/dreamers/global/refs/delegation.md`
-- `~/.claude/dreamers/global/refs/close-out.md`
-- `~/.claude/dreamers/global/refs/agent-recovery.md`
+- `~/.claude/dreamers/refs/git-workflow.md`
+- `~/.claude/dreamers/refs/quality-gates.md`
+- `~/.claude/dreamers/refs/delegation.md`
+- `~/.claude/dreamers/refs/close-out.md`
+- `~/.claude/dreamers/refs/agent-recovery.md`
 
 If the plan has sub-plans, also read:
-- `~/.claude/dreamers/global/refs/sub-plan-loop.md`
+- `~/.claude/dreamers/refs/sub-plan-loop.md`
 
 Route: Forge → Sentinel → Probe → Close-out (Bolt handles push + PR)
 

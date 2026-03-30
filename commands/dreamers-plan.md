@@ -1,10 +1,10 @@
 Read these refs before starting:
-- `~/.claude/dreamers/global/refs/planning-protocol.md`
-- `~/.claude/dreamers/global/refs/plan-rules.md`
-- `~/.claude/dreamers/global/refs/feature-decomposition.md`
-- `~/.claude/dreamers/global/refs/plan-content.md`
-- `~/.claude/dreamers/global/refs/testing-mandate.md`
-- `~/.claude/dreamers/global/refs/citation-accuracy.md`
+- `~/.claude/dreamers/refs/planning-protocol.md`
+- `~/.claude/dreamers/refs/plan-rules.md`
+- `~/.claude/dreamers/refs/feature-decomposition.md`
+- `~/.claude/dreamers/refs/plan-content.md`
+- `~/.claude/dreamers/refs/testing-mandate.md`
+- `~/.claude/dreamers/refs/citation-accuracy.md`
 
 Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
 

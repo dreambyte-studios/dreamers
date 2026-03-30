@@ -34,7 +34,7 @@ Light exploration is allowed — e.g. confirm a feature exists, glance at a conf
 **Step 4 — Draft the issue**
 Write a focused, minimal issue from the user's input (and any brief exploration from Step 3).
 
-Use the template at `~/.claude/dreamers/global/templates/github-issue.md` as the structure. Keep the body concise — no padding, no restatement of the title.
+Use the template at `~/.claude/dreamers/templates/github-issue.md` as the structure. Keep the body concise — no padding, no restatement of the title.
 
 ACs must be written from a **product owner perspective** — user-facing outcomes, not technical implementation. "User can filter by date" not "Add dateFilter param to query handler".
 

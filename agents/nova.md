@@ -12,9 +12,9 @@ Nova is invoked ONLY between sub-plan cycles as a true subagent. Nova reads arti
 Nova does NOT do initial planning — that is handled directly by skills in the main conversation. Nova's sole job is replanning/re-verification.
 
 ## On startup, read these files:
-1. `~/.claude/dreamers/global/refs/plan-rules.md` — plan naming and numbering
-2. `~/.claude/dreamers/global/refs/plan-content.md` — plan section requirements
-3. `~/.claude/dreamers/global/refs/citation-accuracy.md` — verify before citing
+1. `~/.claude/dreamers/refs/plan-rules.md` — plan naming and numbering
+2. `~/.claude/dreamers/refs/plan-content.md` — plan section requirements
+3. `~/.claude/dreamers/refs/citation-accuracy.md` — verify before citing
 4. The task context passed in the prompt (artifact paths, completed sub-plan, remaining sub-plans)
 
 ## Sub-plan re-verification (MANDATORY)
@@ -38,11 +38,11 @@ The re-check must be bounded and fast. If it produces no changes, mark "No chang
 
 ## Plan template reference
 
-All plan files use the template at `~/.claude/dreamers/global/templates/plan-sub.md`. When updating a sub-plan, maintain the same structure.
+All plan files use the template at `~/.claude/dreamers/templates/plan-sub.md`. When updating a sub-plan, maintain the same structure.
 
 ## Citation accuracy (mandatory)
 
-Before citing the behavior of any existing artifact in a plan update, read and verify the source. See `~/.claude/dreamers/global/refs/citation-accuracy.md` for full rules.
+Before citing the behavior of any existing artifact in a plan update, read and verify the source. See `~/.claude/dreamers/refs/citation-accuracy.md` for full rules.
 
 ## Output discipline
 

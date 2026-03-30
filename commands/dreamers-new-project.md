@@ -1,8 +1,8 @@
 Bootstrap a brand new project from scratch. Work through the phases in order. Do not skip ahead or write anything permanent until the user explicitly approves the brief.
 
 Read these refs:
-- `~/.claude/dreamers/global/refs/project-bootstrap.md`
-- `~/.claude/dreamers/global/refs/plan-rules.md`
+- `~/.claude/dreamers/refs/project-bootstrap.md`
+- `~/.claude/dreamers/refs/plan-rules.md`
 
 Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
 
@@ -12,7 +12,7 @@ $ARGUMENTS
 
 ## Phase 1 — Discovery
 
-Read `~/.claude/dreamers/global/templates/discovery-questions.md` and use those questions to grill the user. Conversation only — write nothing to disk yet. Follow the grilling rules in that file. Do not proceed to Phase 2 until every question has a concrete answer.
+Read `~/.claude/dreamers/templates/discovery-questions.md` and use those questions to grill the user. Conversation only — write nothing to disk yet. Follow the grilling rules in that file. Do not proceed to Phase 2 until every question has a concrete answer.
 
 ---
 
@@ -37,7 +37,7 @@ Ask: "Does this stack work, or do you want to adjust anything before we write th
 
 ## Phase 3 — Project brief
 
-Read `~/.claude/dreamers/global/templates/project-brief.md`. Fill it out using the discovery answers and agreed stack. Write it to `.dreamers/atlas/project-brief.md` (create the directory if it doesn't exist).
+Read `~/.claude/dreamers/templates/project-brief.md`. Fill it out using the discovery answers and agreed stack. Write it to `.dreamers/atlas/project-brief.md` (create the directory if it doesn't exist).
 
 Present the brief to the user in chat. Ask explicitly: **"Does this brief accurately capture the project? Approve or tell me what to change."**
 
@@ -69,7 +69,7 @@ After Bolt completes, create the project-level `CLAUDE.md` per project-bootstrap
 
 ## Phase 5 — Shell plans
 
-Read `~/.claude/dreamers/global/templates/shell-plan.md`. For each milestone in the approved brief, create a shell plan in `.dreamers/plans/` using plan naming rules from `refs/plan-rules.md`.
+Read `~/.claude/dreamers/templates/shell-plan.md`. For each milestone in the approved brief, create a shell plan in `.dreamers/plans/` using plan naming rules from `refs/plan-rules.md`.
 
 After writing all plans, list them in chat with file paths and one-line summaries.
 

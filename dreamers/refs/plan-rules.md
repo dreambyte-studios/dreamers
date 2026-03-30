@@ -16,6 +16,4 @@ Slug rules:
 - collapse repeated hyphens
 - if empty, use `misc`
 
-Plans live in:
-- Repo-local: `./.dreamers/plans/`
-- Global: `~/.claude/dreamers/global/plans/`
+Plans live in: `./.dreamers/plans/`

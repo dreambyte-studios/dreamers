@@ -1,8 +1,8 @@
 Add comprehensive, production-grade logging to the project. Work through the phases in order. Do not touch code until the user approves the audit findings.
 
 Read these refs:
-- `~/.claude/dreamers/global/refs/git-workflow.md`
-- `~/.claude/dreamers/global/refs/delegation.md`
+- `~/.claude/dreamers/refs/git-workflow.md`
+- `~/.claude/dreamers/refs/delegation.md`
 
 Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
 
@@ -57,7 +57,7 @@ Invoke Forge (follow delegation.md). Forge's task:
 
 - Install the approved framework using the project's package manager
 - Set up central logger module with dev (pretty-printed) and prod (structured JSON) modes
-- Follow `~/.claude/dreamers/global/templates/logging-standards.md`
+- Follow `~/.claude/dreamers/templates/logging-standards.md`
 - Replace existing raw logging with appropriate log level calls
 - Add logging to instrumentation areas from Phase 1
 
