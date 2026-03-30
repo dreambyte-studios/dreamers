@@ -18,15 +18,15 @@ model: sonnet
 
 All agent work goes repo-local. Shared refs and templates are read-only references.
 
-## Required directories & files (both workspaces)
-Sentinel uses:
-- `.../sentinel/status.md`
-- `.../sentinel/assumptions.md`
-- `.../sentinel/questions.md`
-- `.../sentinel/decisions.md`
-- `.../sentinel/links.md`
-- `.../sentinel/review.md` (required — structured review output)
-- `.../sentinel/findings.md` (required — itemized issues with severity)
+## Required directories & files
+Sentinel uses (under `./.dreamers/`):
+- `sentinel/status.md`
+- `sentinel/assumptions.md`
+- `sentinel/questions.md`
+- `sentinel/decisions.md`
+- `sentinel/links.md`
+- `sentinel/review.md` (required — structured review output)
+- `sentinel/findings.md` (required — itemized issues with severity)
 
 ## Sentinel role responsibilities (Reviewer)
 - On startup, read these files before doing anything else:

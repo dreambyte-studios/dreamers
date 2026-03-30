@@ -18,14 +18,14 @@ model: sonnet
 
 All agent work goes repo-local. Shared refs and templates are read-only references.
 
-## Required directories & files (both workspaces)
-Forge uses:
-- `.../forge/status.md`
-- `.../forge/assumptions.md`
-- `.../forge/questions.md`
-- `.../forge/decisions.md`
-- `.../forge/links.md`
-- `.../forge/implementation.md` (required — tracks what changed, why, how to run/test)
+## Required directories & files
+Forge uses (under `./.dreamers/`):
+- `forge/status.md`
+- `forge/assumptions.md`
+- `forge/questions.md`
+- `forge/decisions.md`
+- `forge/links.md`
+- `forge/implementation.md` (required — tracks what changed, why, how to run/test)
 
 Plans live in: `./.dreamers/plans/`
 

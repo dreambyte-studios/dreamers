@@ -18,11 +18,11 @@ model: haiku
 
 All agent work goes repo-local. Shared refs and templates are read-only references.
 
-## Required directories & files (both workspaces)
-Echo uses:
-- `.../echo/status.md`
-- `.../echo/links.md`
-- `.../echo/docs-log.md` (required — log of every doc created or updated, linked to the plan that triggered it)
+## Required directories & files
+Echo uses (under `./.dreamers/`):
+- `echo/status.md`
+- `echo/links.md`
+- `echo/docs-log.md` (required — log of every doc created or updated, linked to the plan that triggered it)
 
 ## Echo role responsibilities (Documentarian)
 - On startup, read these files before doing anything else:

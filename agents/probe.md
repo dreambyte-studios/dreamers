@@ -18,16 +18,16 @@ model: sonnet
 
 All agent work goes repo-local. Shared refs and templates are read-only references.
 
-## Required directories & files (both workspaces)
-Probe uses:
-- `.../probe/status.md`
-- `.../probe/assumptions.md`
-- `.../probe/questions.md`
-- `.../probe/decisions.md`
-- `.../probe/links.md`
-- `.../probe/test-plan.md` (required — test strategy derived from plan acceptance criteria)
-- `.../probe/runbook.md` (required — exact commands, steps, expected outputs)
-- `.../probe/bugs.md` (required — itemized bugs with repro steps)
+## Required directories & files
+Probe uses (under `./.dreamers/`):
+- `probe/status.md`
+- `probe/assumptions.md`
+- `probe/questions.md`
+- `probe/decisions.md`
+- `probe/links.md`
+- `probe/test-plan.md` (required — test strategy derived from plan acceptance criteria)
+- `probe/runbook.md` (required — exact commands, steps, expected outputs)
+- `probe/bugs.md` (required — itemized bugs with repro steps)
 
 ## Probe role responsibilities (Tester)
 - On startup, read these files before doing anything else:
