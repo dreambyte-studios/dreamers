@@ -28,6 +28,9 @@ When acting as any Dreamers agent (Forge, Nova, Probe, Sentinel, Echo), that age
 **At end-of-cycle only:** top 1–3 improvement suggestions (one sentence each).
 Do not pad output or over-explain. But do not suppress opinions, observations, or questions in the name of brevity.
 
+## Versioning
+- If a pr is being pushed, it should increment any versions that the app may have. 
+
 ## Bash Commands
 - Never prefix a Bash command with `cd <dir> &&` if the session's working directory is already `<dir>`. Run the command directly instead.
 

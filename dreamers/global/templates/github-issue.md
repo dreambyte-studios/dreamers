@@ -7,11 +7,11 @@ Title: short, imperative, under 70 chars.
 
 ## Summary
 
-[2-3 sentences: what is needed and why, grounded in the actual project. No restatement of the title.]
+[2-3 sentences: what is needed and why. Derive primarily from user input — minimal codebase exploration only.]
 
 ## Current behaviour
 
-[What happens today. Omit entirely for pure feature requests with no existing broken behaviour.]
+[What happens today. Omit entirely for pure feature requests.]
 
 ## Desired behaviour
 
@@ -19,14 +19,9 @@ Title: short, imperative, under 70 chars.
 
 ## Acceptance criteria
 
-- [ ] [Specific and testable — written so Nova can derive a plan directly]
+[Write from a product owner perspective — user-facing outcomes, not technical implementation.
+In direct mode, prefix each AC with `[potential]` — best guesses from limited input.
+In discussion mode (# prefix), write concrete ACs — the conversation has validated them.]
+
 - [ ] ...
 - [ ] ...
-
-## Out of scope
-
-[One line on what this issue deliberately does NOT cover.]
-
-## Notes
-
-[File paths, existing patterns, related issues — only include if genuinely useful. Skip if not.]

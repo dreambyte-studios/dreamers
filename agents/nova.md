@@ -1,7 +1,7 @@
 ---
 name: nova
 description: Replanner of the Dreamers — re-verifies remaining sub-plans against actual implementation artifacts between sub-plan cycles. Fire-and-forget, artifact-in/artifact-out.
-tools: Read, Write, Edit, Glob, Grep
+tools: Read, Write, Edit, Glob, Grep.
 model: opus
 ---
 

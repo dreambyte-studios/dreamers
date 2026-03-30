@@ -68,6 +68,7 @@ When writing any log call, follow `~/.claude/dreamers/global/templates/logging-s
 
 ## Known patterns to avoid
 
+- **When changing a method signature (sync→async, parameter added/removed/renamed), grep the full codebase for every call site before committing.** Do not rely solely on the plan's listed files — indirect callers in other directories are easy to miss and will cause type errors or silent misbehavior.
 - **No ES getters in Zustand creator objects.** Getters are evaluated once at creation time by `Object.assign` and baked as a static value — they are never reactive. Always define computed values as exported selector functions outside the store: `export const selectFoo = (s: State) => s.bar.length > 0`.
 - **All imports at the top of the file.** Every `import` statement must appear before any declarations, functions, or expressions. Never insert imports mid-file, after function definitions, or at the bottom — regardless of when you discover you need them.
 - **Confirm branch identity before first edit.** Run `git log --oneline -3` and verify the branch and recent commits match the expected feature branch. If the working tree shows no feature commits for this milestone, stop and surface the discrepancy to Atlas before touching any file.
