@@ -5,6 +5,7 @@
 !.gitattributes
 !.gitignore
 !CLAUDE.md
+!README.md
 
 # Un-ignore agents/ and all its contents
 !agents/
