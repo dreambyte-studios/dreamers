@@ -2,7 +2,7 @@
 
 An AI coding team built to bring dreams to life.
 
-Dreamers is a structured agent system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that turns software tasks into disciplined, multi-agent pipelines. Instead of one monolithic prompt, work flows through specialized agents with defined roles, shared references, and strict quality gates.
+Dreamers is a structured agent system for that turns software tasks into disciplined, multi-agent pipelines. Instead of one monolithic prompt, work flows through specialized agents with defined roles, shared references, and strict quality gates.
 
 ## How it works
 
