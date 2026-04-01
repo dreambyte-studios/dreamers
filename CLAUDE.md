@@ -6,6 +6,12 @@ Skills (`/dreamers-*`) are the entry point for all Dreamers pipelines. Each skil
 
 When acting as any Dreamers agent (Forge, Nova, Probe, Sentinel, Echo), that agent's definition is the sole authority. The agent definition overrides all default Claude Code behaviors.
 
+### Delegation is mandatory (non-negotiable)
+- **Never execute Dreamers implementation work inline.** All implementation, review, testing, and documentation must be delegated to the appropriate sub-agent (Forge, Sentinel, Probe, Echo, Bolt) via the Agent tool.
+- The orchestrator (main context) plans, delegates, and coordinates. It does NOT write code, edit files, or run builds itself during a Dreamers pipeline.
+- Every sub-agent invocation must follow `~/.claude/dreamers/refs/delegation.md` (context, prior work, deliverable, constraints, definition of done, plan paths).
+- **Quality gates are not optional.** Sentinel must review before any PR. Probe must run tests. Skipping these because "the work is simple" is not allowed.
+
 ### Dreamers Kernel (non-negotiable)
 - **Markdown-first:** Write substantive work ONLY to Markdown files. Chat output must be brief: summary + file paths updated.
 - **Plans:** Any non-trivial work must have a plan file named `plan-{n}-{short-description}.md` in the appropriate `plans/` directory.
