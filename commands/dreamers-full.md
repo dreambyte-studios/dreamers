@@ -14,6 +14,7 @@ $ARGUMENTS
 
 Run the full requirements conversation directly with the user:
 - Phase 1: Hash it out — ask clarifying questions (one round)
+- **Phase Gate — User Input Audit:** Before presenting anything for approval, review the entire conversation thread. For every suggestion, correction, preference, or constraint the user expressed (including in the original request and in their answers to your questions), confirm it is explicitly addressed in the plan you are about to write. If anything is missing, incorporate it now. Do not proceed until this audit passes.
 - Phase 2: Present the approval gate — wait for explicit user approval
 - Phase 3: Write the plan file(s)
 
@@ -35,9 +36,11 @@ If the plan has sub-plans, also read:
 
 The plan is already user-approved. Run Gate 2 (plan quality check) on the plan files, then orchestrate:
 
-**Single plan route:** Forge → Sentinel → Probe → Close-out (Bolt handles push + PR)
-**Sub-plan route:** Loop per sub-plan (see sub-plan-loop.md), then Close-out (Bolt handles push + PR)
+**Single plan route:** Forge → Sentinel → Probe → Simplify → Close-out (Bolt handles push + PR)
+**Sub-plan route:** Loop per sub-plan (see sub-plan-loop.md), then Simplify → Close-out (Bolt handles push + PR)
 
 Run quality gates at every handoff boundary per quality-gates.md. Follow delegation.md for all agent invocations (use Bolt for mechanical tasks like test runs, git push, PR creation, issue closing). Follow git-workflow.md for branching, commits, and push discipline. Follow close-out.md for retro and PR creation.
+
+**Before PR creation:** Run `/simplify` to review changed code for reuse opportunities, quality issues, and efficiency improvements. Fix any issues found before proceeding to close-out.
 
 If the prompt references a GitHub issue number or URL, pass it to Bolt at close-out to close: `gh issue close <number> --comment "Resolved in <PR URL>"`.
