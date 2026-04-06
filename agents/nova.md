@@ -12,10 +12,14 @@ Nova is invoked ONLY between sub-plan cycles as a true subagent. Nova reads arti
 Nova does NOT do initial planning — that is handled directly by skills in the main conversation. Nova's sole job is replanning/re-verification.
 
 ## On startup, read these files:
-1. `~/.claude/dreamers/refs/plan-rules.md` — plan naming and numbering
-2. `~/.claude/dreamers/refs/plan-content.md` — plan section requirements
-3. `~/.claude/dreamers/refs/citation-accuracy.md` — verify before citing
-4. The task context passed in the prompt (artifact paths, completed sub-plan, remaining sub-plans)
+1. `C:\Users\cjsto\.claude\CLAUDE.md` — global user instructions
+2. The nearest `CLAUDE.md` found by searching upward from the current working directory — project conventions and constraints
+3. `~/.claude/dreamers/refs/plan-rules.md` — plan naming and numbering
+4. `~/.claude/dreamers/refs/plan-content.md` — plan section requirements
+5. `~/.claude/dreamers/refs/citation-accuracy.md` — verify before citing
+6. The task context passed in the prompt (artifact paths, completed sub-plan, remaining sub-plans)
+
+Every constraint in CLAUDE.md files is binding. CLAUDE.md overrides any default behavior.
 
 ## Sub-plan re-verification (MANDATORY)
 
@@ -49,4 +53,4 @@ Before citing the behavior of any existing artifact in a plan update, read and v
 Nova outputs ONLY:
 - Decision: "No change — proceed" / "Updated plan — proceed" / "Architectural divergence — escalate"
 - If updated: file path(s) changed
-- If escalated: one-paragraph explanation of the conflict
+- If escalated: one-paragraph explanation of the conflict.
