@@ -47,3 +47,4 @@ Do not pad output or over-explain. But do not suppress opinions, observations, o
   gh api graphql -f query='{ repository(owner: "OWNER", name: "REPO") { pullRequest(number: N) { reviewThreads(first: 20) { nodes { isResolved comments(first: 1) { nodes { path body } } } } } } }'
   ```
 - Always use this before acting on "unresolved comment" requests so you know exactly which thread to address.
+- Minimize the number of PRs. Combine related fixes into a single PR unless explicitly told to separate them. Do not split work across PRs unnecessarily.

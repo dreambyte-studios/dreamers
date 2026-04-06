@@ -37,6 +37,8 @@ Only after explicit user approval: write the plan file(s) per the naming rules i
 
 Use the template at `~/.claude/dreamers/templates/plan-sub.md` as the starting structure for every sub-plan and standalone plan.
 
+**Component usage check (mandatory):** When a plan modifies a shared component, run `grep -r "ComponentName" app/` before finalizing the scope file list — include all callers in scope to avoid build failures from missing prop updates.
+
 ## Output discipline during planning
 
 **During Phase 1:** Understanding summary (one paragraph) + numbered clarifying questions (one round only).

@@ -59,9 +59,37 @@ After Probe completes:
 
 ---
 
+## findings.md format (mandatory)
+
+Sentinel **must** write `findings.md` as a JSON code block containing an array of finding objects. No prose, no markdown lists — structured output only.
+
+```json
+[
+  {
+    "id": "S-01",
+    "file": "relative/path/to/file.ts",
+    "line": 42,
+    "severity": "critical | high | medium | low",
+    "issue": "One-sentence description of the problem.",
+    "suggested_fix": "Specific, actionable description of what Forge should do."
+  }
+]
+```
+
+- `id`: Sequential (`S-01`, `S-02`, …) — used for tracking and re-review scoping
+- `file` + `line`: Must be exact — no invented paths, no approximate line numbers
+- `severity`: One of the four values above, no others
+- `suggested_fix`: Must be actionable enough for Forge to act on without follow-up questions
+
+If there are no findings, write `[]`. Never omit the file.
+
+---
+
 ## Finding routing rule (non-negotiable)
 
 Any finding in `findings.md` at any severity — critical, high, medium, or low — routes to Forge for a fix before Probe runs. No deferred or skipped findings. If Sentinel files it, Forge fixes it.
+
+The orchestrator passes the parsed `findings.md` JSON array directly as Forge's fix brief — no rewriting required. Forge must address every finding by `id` and confirm each one in `implementation.md`.
 
 ## Re-review rule
 

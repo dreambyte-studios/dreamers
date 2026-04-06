@@ -15,6 +15,9 @@
 !commands/
 !commands/**
 
+# Ignore gate.md (belongs to another repo)
+commands/gate.md
+
 # Un-ignore dreamers/ refs and templates only
 !dreamers/
 !dreamers/refs/
