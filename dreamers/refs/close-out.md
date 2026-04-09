@@ -2,9 +2,16 @@
 
 Run this when all Sentinel passes clear and Probe passes.
 
+## Echo (documentation update)
+
+Before final commit, invoke **Echo** (Haiku subagent) to update project documentation:
+- Pass Echo the plan file path, `forge/implementation.md`, and any relevant context
+- Echo updates the project-level `CLAUDE.md` (Echo-owned sections only) and any other docs that need updates based on what was shipped
+- Echo logs all doc changes to `.dreamers/echo/docs-log.md`
+
 ## Final commit (before PR)
 
-Before opening the PR, create a final commit capturing any remaining changes:
+Before opening the PR, create a final commit capturing any remaining changes (including Echo's doc updates):
 1. `git status` — check for uncommitted changes
 2. If changes exist, commit with message: `feat(D<N>): final cleanup before PR` (or appropriate message)
 3. If no changes, skip — do not create empty commits
