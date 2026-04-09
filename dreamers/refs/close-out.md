@@ -2,6 +2,13 @@
 
 Run this when all Sentinel passes clear and Probe passes.
 
+## Final commit (before PR)
+
+Before opening the PR, create a final commit capturing any remaining changes:
+1. `git status` — check for uncommitted changes
+2. If changes exist, commit with message: `feat(D<N>): final cleanup before PR` (or appropriate message)
+3. If no changes, skip — do not create empty commits
+
 ## PR creation (delegate to Bolt)
 
 Invoke **Bolt** (Haiku subagent) for the mechanical PR steps. Pass Bolt:
@@ -11,6 +18,13 @@ Invoke **Bolt** (Haiku subagent) for the mechanical PR steps. Pass Bolt:
 4. If the original task referenced a GitHub issue number or URL, include it so Bolt can close it: `gh issue close <number> --comment "Resolved in <PR URL>"`
 
 Bolt reports back: PR URL, issue closed (if applicable). User reviews the diff and merges.
+
+## Post-PR changes (no auto-commit)
+
+If any changes are made after the PR is created (e.g., addressing review comments, fixes):
+1. **Do NOT auto-commit.** Ask the user: "I have changes ready. Should I commit and push these to the PR?"
+2. Only commit and push after explicit user approval.
+3. Use commit message: `fix(D<N>): address PR feedback` (or appropriate message)
 
 ## Retrospective (run before opening PR)
 

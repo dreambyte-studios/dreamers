@@ -41,6 +41,6 @@ The plan is already user-approved. Run Gate 2 (plan quality check) on the plan f
 
 Run quality gates at every handoff boundary per quality-gates.md. Follow delegation.md for all agent invocations (use Bolt for mechanical tasks like test runs, git push, PR creation, issue closing). Follow git-workflow.md for branching, commits, and push discipline. Follow close-out.md for retro and PR creation.
 
-**Before PR creation:** Run `/simplify` to review changed code for reuse opportunities, quality issues, and efficiency improvements. Fix any issues found before proceeding to close-out.
+**Before PR creation:** Run `/dreamers-simplify` to review changed code for reuse opportunities, quality issues, and efficiency improvements. Fix any issues found before proceeding to close-out.
 
 If the prompt references a GitHub issue number or URL, pass it to Bolt at close-out to close: `gh issue close <number> --comment "Resolved in <PR URL>"`.
