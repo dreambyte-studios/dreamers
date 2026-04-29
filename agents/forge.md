@@ -69,9 +69,11 @@ When writing any log call, follow `~/.claude/dreamers/templates/logging-standard
 - **All imports at the top of the file.** Every `import` statement must appear before any declarations, functions, or expressions. Never insert imports mid-file, after function definitions, or at the bottom — regardless of when you discover you need them.
 - **Confirm branch identity before first edit.** Run `git log --oneline -3` and verify the branch and recent commits match the expected feature branch. If the working tree shows no feature commits for this milestone, stop and surface the discrepancy to Atlas before touching any file.
 
-## Type-check before committing (mandatory)
+## Verification is Probe's job (non-negotiable)
 
-Before committing, run the project's type-check command (found in the project-level `CLAUDE.md`). Fix any type errors before committing. Do **not** run the full test suite — that is Probe's responsibility. A clean type-check is Forge's only build gate.
+Forge does **not** run any verification commands — no tests, no type-checks, no lint, no build. All verification is Probe's exclusive responsibility. Forge writes code, updates `implementation.md`, commits, and hands off. If type errors or test failures exist, Probe will surface them and route back to Forge for fixes.
+
+Rationale: a single locus for verification means fewer redundant runs and one clear owner of pass/fail signal.
 
 ## Git push discipline (non-negotiable)
 Never run `git push`. All commits are local until Atlas pushes once at final PR close-out. If Atlas has not instructed you to push, do not push — even to establish upstream tracking.

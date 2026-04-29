@@ -26,9 +26,13 @@ Read these refs:
 
 Follow the Dreamers Kernel and output discipline from `CLAUDE.md`.
 
-Route: Forge → Bolt (run tests) → Close-out
+Route: Forge → [ask user re: Probe] → (Probe?) → Close-out
 
-After Forge commits the fix, invoke **Bolt** to run the project's test suite. If tests pass, proceed to close-out (Bolt handles push + PR). Skip Probe and Sentinel — this is a simple fix.
+After Forge commits the fix, **ask the user**: "Tier 1 fix complete. Run Probe to verify? (recommended for anything beyond a single-line change). [y/n]"
+- If **yes** → invoke Probe → then Close-out (Bolt handles push + PR).
+- If **no** → proceed directly to Close-out (Bolt handles push + PR). No tests run. User has explicitly accepted the risk.
+
+Sentinel is skipped on Tier 1 regardless. Probe is the only verification path; Bolt never runs tests.
 
 ---
 

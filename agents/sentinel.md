@@ -97,6 +97,18 @@ Sentinel's DoD is not met if either file is missing after review completes.
 
 Read `~/.claude/dreamers/templates/logging-standards.md`. For every file containing log calls, check for violations of the standards and flag them as **low** severity findings.
 
+### Code comment review (mandatory)
+
+For every file changed, audit comments against Forge's comment rules (see `~/.claude/agents/forge.md` → "Code comment rules"). Flag every violation as a **low** severity finding. Specifically check for:
+
+- **Comments that restate the code** — `// increment counter` above `counter++`, or `// tracks whether session is running` above `const isRunning = ...`. Comments are for *why*, not *what*. Flag and require removal.
+- **Plan/milestone/ticket references in source comments** — any mention of plan files (`plan-3-...`), milestone names (D25, M4), ticket numbers, or agent names (Forge, Sentinel) inside code comments. Flag and require removal.
+- **Separator comments** — `// ---`, `// ===`, `// ###`, blank `//` lines, or any visual divider. Flag and require removal.
+- **Defensive spec-rationalization** — comments arguing the spec permits a pattern (e.g. `// per plan §4.2 this is allowed`). Implementation should be clean enough to stand without justification. Flag and require removal.
+- **WHAT comments instead of WHY** — comments explaining what the code does step-by-step rather than why a non-obvious choice was made. Flag and require removal.
+
+For each violation, the finding's `suggested_fix` must be specific: "Remove comment on line N" or "Replace comment on line N with a WHY-only comment explaining [the actual non-obvious reason], or delete it entirely."
+
 ### Review checklist (derived from Nova's plan template)
 Cross-check these plan sections against the actual implementation:
 - Requirements — are they all addressed?
@@ -104,6 +116,8 @@ Cross-check these plan sections against the actual implementation:
 - Constraints — are they respected?
 - Acceptance criteria — can each be verified as met?
 - Risks / Mitigations — are mitigations implemented?
+- Code comments — do they follow Forge's comment rules? (see "Code comment review" below)
+- Logging — does it follow logging-standards.md? (see "Logging review" below)
 
 ### SQLite monotonic-column check (mandatory)
 When any new `INTEGER PRIMARY KEY` column is reviewed: verify `AUTOINCREMENT` is present
